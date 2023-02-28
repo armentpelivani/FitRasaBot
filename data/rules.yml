@@ -1,0 +1,20 @@
+version: "3.1"
+
+rules:
+
+- rule: Attivazione bmi form
+  steps:
+  - intent: calcolo_bmi
+  - action: bmi_form
+  - active_loop: bmi_form
+
+- rule: Submit bmi form
+  condition:
+  - active_loop: bmi_form
+  steps:
+  - action: bmi_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_submit
+  - action: action_calc_bmi

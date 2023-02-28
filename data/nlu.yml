@@ -1,0 +1,108 @@
+version: "3.1"
+
+nlu:
+- intent: saluto
+  examples: |
+    - ciao
+    - salve
+    - bella 
+    - buongiorno 
+    - buona sera 
+    - ciao amico
+
+- intent: affermazione
+  examples: |
+    - si 
+    - va bene 
+    - certamente 
+    - certo
+    - assolutamente 
+    - ok 
+    - certo che si 
+    - ovvio
+
+- intent: negazione 
+  examples: |
+    - no 
+    - non mi interessa 
+    - assolutamente no 
+    - nnn ci penso prorpio 
+    - neanche morto 
+
+
+- intent: calcolo_bmi # gli dico che coosco il bmi
+  examples: |
+    - caloliamo il bmi
+    - procediamo con il calcolo del bmi
+    - facciammo il calocolo 
+    - andiamo con la misura 
+    - fammi vedere il mio bmi
+    - calcoliamo il mio bmi
+    - calcoliamo il bmi
+    - voglio conoscere il bmi 
+    - fammi il calcolo 
+    - calcola 
+    - voglio il bmi 
+    - fammi il bmi 
+    - procediamo con il calcolo 
+
+
+- intent: informazioni 
+  examples: |
+    - vorrei saperne di più
+    - dimmi di cosa si tratta 
+    - vorrei avere delle informazioni a riguardo 
+    - vorrei avere delle informazioni 
+    - info 
+    - informazioni
+    - spiegami di cosa si tratta 
+    - voglio sapere delle info   
+    
+
+- intent: scelta_dieta
+  examples: |
+    - mi servirebbe definire la dieta 
+    - va bene, aiutami a definire il piano alimentare 
+    - mi servirebbe capire la dieta da seguire 
+    - vediamo il piano alimentare 
+    - voglio capire che tipo di alimentazione seguire 
+    - voglio capire che tipo di dieta seguire 
+    - piano alimentare 
+    - definiamo la dieta 
+    - dieta 
+    - fammi vedere il piano da seguire 
+    - alimentazione 
+    - mi piacerebbe sapere che dieta seguire per allenarmi 
+
+- intent: not_opzioni
+  examples: |
+    - non mi serve altro grazie 
+    - sono a posto così grazie
+    - va bene così
+    - no no non mi serve ninent altro 
+    - sono servito
+    - nient altro 
+    - non mi serve il tuo aiuto  
+
+- intent: parametriBmi
+  examples: |
+    - peso [83.5](Epeso) kg
+    - [100.4](Epeso)
+    - [102.9](Epeso) kg
+    - [34.1](Epeso) Kg
+    - Il mio peso è di [45.2](Epeso) KG
+    - sono [34.1](Epeso)
+    - sono [76.4](Epeso) kg
+    - sono [89.1](Epeso) Kg
+    - sono [202.7](Epeso) KG
+    - sono alto [1.78](Ealtezza) m
+    - sono [1.2](Ealtezza) M 
+    - [2.18](Ealtezza) 
+    - [1.92](Ealtezza) M
+    - la mia altezza è di [1.67] m
+    - la mia altezza è di [1.83] M
+    - la mia altezza è di [1.77] 
+
+
+
+   

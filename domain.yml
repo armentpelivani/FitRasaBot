@@ -1,0 +1,75 @@
+version: "3.1"
+
+intents:
+  - saluto
+  - affermazione 
+  - negazione 
+  - calcolo_bmi 
+  - parametriBmi
+  - request_bmi_form
+  - scelta_dieta
+  - not_opzioni
+  - informazioni 
+
+entities:
+  - Epeso
+  - Ealtezza
+
+slots:
+  Epeso:
+    type: text
+    # min_value: 20.0
+    # max_value: 500.0
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: Epeso
+  
+  Ealtezza:
+    type: text
+    # min_value: 0.5
+    # max_value: 3.0
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: Epeso
+
+forms:
+  bmi_form:
+    required_slots:
+      - Epeso
+      - Ealtezza
+
+responses:
+
+  utter_ric:
+  - text: Ciao, io sono Feet, il tuo personal trainer e sono qui per sostenerti nei tuoi primi passi nel mondo della palestra. Per iniziare, preferisci che ti aiuti a formare il tuo piano alimentare oppure che iniziamo ad allenarci?
+
+  utter_ric_bmi:
+  - text: Bene, per capire che tipo di alimentazione seguire è necessario che io calcoli il tuo indice di massa corporea, ovvero il bmi, vuoi avere delle informazioni a riguardo  oppure vuoi che proceda con il calcolo del bmi?
+
+  utter_ric_calc_bmi:
+  - text:  Vogliamo procedere con il calcolo del bmi?
+
+  utter_submit:
+  - text: ho fatto
+
+  utter_ask_Epeso:
+  - text: Mi servirebbe conoscere il tuo peso per il calcolo(inserisci il peso in kg)?
+
+  utter_ask_Ealtezza:
+  - text: Mi servirebbe conoscere la tua altezza per il calcolo(metti l'altezza in metri)?
+
+actions:
+- utter_ric
+- utter_ric_bmi
+- utter_ric_calc_bmi
+- utter_submit
+- action_calc_bmi
+- validate_bmi_form
+
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
