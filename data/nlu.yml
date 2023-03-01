@@ -57,6 +57,33 @@ nlu:
     - informazioni
     - spiegami di cosa si tratta 
     - voglio sapere delle info   
+
+
+- intent: scelta_inizio_allenamento 
+  examples: |
+    - preferirei iniziare ad allenarmi 
+    - iniziamo ad allenarci 
+    - alleniamoci va 
+    - preferirei iniziare con gli allenamenti 
+    - allenamenti 
+    - allenamento 
+    - preferirei iniziare a definire il piano di allenamento 
+    - iniziamo con il piano di allenamento 
+
+- intent: scelta_parte_allenare 
+  examples: |
+    - preferirei iniziare ad allenare(gambe)[Escheda]
+    - vorrei allenare le (braccia)[Escheda]
+    - mi picaerebbe allenare le (gambe)[Escheda]
+    - alleniamo la (schiena)[Escheda]
+    - vorrei fare(cardio)[Escheda]
+    - (gambe)[Escheda]
+    - (braccia)[Escheda]
+    - (schiena)[Escheda]
+    - (cardio)[Escheda]
+
+
+
     
 
 - intent: scelta_dieta
@@ -68,6 +95,10 @@ nlu:
     - voglio capire che tipo di alimentazione seguire 
     - voglio capire che tipo di dieta seguire 
     - piano alimentare 
+    - vorrei definirmi un piano alimentare 
+    - vorrei definire un piano alimentare 
+    - definiscimi un piano alimentare 
+    - vorrei farmi un piano alimentare
     - definiamo la dieta 
     - dieta 
     - fammi vedere il piano da seguire 
@@ -83,6 +114,17 @@ nlu:
     - sono servito
     - nient altro 
     - non mi serve il tuo aiuto  
+
+- intent: nome
+  examples: |
+    - mi chiamo [Luigi](Enome)
+    - il mio nome è [Chiara](Enome)
+    - sono [Pippo](Enome)
+    - chiamami pure [Sara](Enome)
+    - puoi chiamarmi [Stefano](Enome)
+    - [Giulia](Enome)
+
+
 
 - intent: parametriBmi
   examples: |
@@ -102,6 +144,19 @@ nlu:
     - la mia altezza è di [1.67] m
     - la mia altezza è di [1.83] M
     - la mia altezza è di [1.77] 
+
+- intent: scelta_casa_palestra 
+  examples: |
+    - mi allenando a [casa](Ecasapalestra)
+    - preferisco allenarmi in [palestra](Ecasapalestra)
+    - [casa](Ecasapalestra)
+    - [palestra](Ecasapalestra)
+    - mi sto allenando in [palestra](Ecasapalestra)
+    - vorrei allenarmi in [palestra](Ecasapalestra)
+    - vorrei allenarmi a [casa](Ecasapalestra)
+
+
+
 
 
 

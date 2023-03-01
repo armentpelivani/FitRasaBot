@@ -1,0 +1,6 @@
+1) Sistemare il nome
+2) Richiesta informazioni esercizi per blocchi. Il risultato della richiesta saranno 5 esercizi, di conseguenza l'utente può
+ottenere maggiori informazioni tramite 5 bottoni che vengono generati.
+3) Restituire delle schede di esercizi (tra quelle pre impostate): sia dopo i calcolo_bmi in caso di sovrappeso, sia nella generazione classica delle schede.
+Includendoci ovviamente se sei a casa o meno. Per la scheda creare ovviamente i bottoni degli esercizi.
+4) (R) Discorso caricamennto immagini delle schede tramite API.

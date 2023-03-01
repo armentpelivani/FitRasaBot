@@ -2,6 +2,28 @@ version: "3.1"
 
 rules:
 
+# regole attivazione e registro nome
+
+- rule: Attivazione nome form
+  steps:
+  - intent: saluto
+  - action: nome_form
+  - active_loop: nome_form
+
+
+- rule: Submit nome form
+  condition:
+  - active_loop: nome_form
+  steps:
+  - action: nome_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_ric
+
+
+# regole attivazione e registro bmi
+
 - rule: Attivazione bmi form
   steps:
   - intent: calcolo_bmi
@@ -18,3 +40,20 @@ rules:
     - requested_slot: null
   - action: utter_submit
   - action: action_calc_bmi
+
+  # regole attivazione e registro casapalestra form
+
+- rule: Attivazione casapalestra form
+  steps:
+    - intent: scelta_inizio_allenamento 
+    - action: casapalestra_form
+    - active_loop: casapalestra_form
+
+- rule: Submit casapalestra form
+  condition:
+  - active_loop: casapalestra_form
+  steps:
+  - action: casapalestra_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null

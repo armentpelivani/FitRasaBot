@@ -13,26 +13,16 @@ from rasa_sdk import Action, Tracker,FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import EventType
 from rasa_sdk.types import DomainDict
-from reportlab.pdfgen import canvas
 import random
 import pandas as pd  
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
 import tabulate
 from tabulate import tabulate
 import os
 import requests
 import csv
 
-import io
-
-my_canvas = canvas.Canvas("./hello.pdf")
-my_canvas.drawString(100, 750, "Welcome to Reportlab!")
-my_canvas.save()
-df = pd.read_csv(r".\csv esercizi.csv",sep=';',encoding='utf-8') 
-
-print(df) 
 
 
 class ValidateBmiForm(FormValidationAction):
@@ -58,7 +48,37 @@ class ValidateBmiForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         dispatcher.utter_message(text=f" la tua altezza è di {slot_value}")
         return{"Ealtezza":slot_value}
+    
+    
+class ValidateNomeForm(FormValidationAction):
+    def name(self) -> Text:
+        return "validate_nome_form"
+    
+    def validate_Enome(
+            self,
+            slot_value: Any,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        dispatcher.utter_message(text=f" Molto piacere {slot_value}")
+        return{"Enome":slot_value}
+    
 
+class ValidateCasaPalestraForm(FormValidationAction):
+        
+     def name(self) -> Text:
+        return "validate_casapalestra_form"
+    
+     def validate_Ecasapalestra(
+            self,
+            slot_value: Any,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        dispatcher.utter_message(text=f" hai scelto di allenarti in {slot_value}")
+        return{"Ecasapalestra":slot_value}
 
 class ActionBmi(Action):
 #
@@ -68,9 +88,12 @@ class ActionBmi(Action):
     def run(self, dispatcher: CollectingDispatcher,
              tracker: Tracker,
              domain: Dict[Text, Any]) -> Dict[Text, Any]:
+          
+          dispatcher.utter_message(text=f"Bene, sto procedendo con il calcolo, pochi secondi e conoscerai la dieta migliore da seguire per il tuo fisico ")
         
           pesoIn =float(tracker.get_slot('Epeso'))
           print(pesoIn)
+
           
           altezzaIn =float(tracker.get_slot('Ealtezza'))
           print(altezzaIn)
@@ -83,19 +106,12 @@ class ActionBmi(Action):
           elif bmi > 25 :
                dispatcher.utter_message(text=f"Dal tuo BMI risulta che sei sovrappeso per tenato questa è la dieta consigliata per te")
                dispatcher.utter_message(text=f"https://www.my-personaltrainer.it/alimentazione/dieta-mediterranea-menu-settimanale-nutrizionista.html")
+               dispatcher.utter_message(text=f"Ti consigliamo di seguire il seguente piano di allenamento mirato a riportarti in una condiione fisic ottimale, da accompagnare alla dieta precedentemente fornita")
           else :
                dispatcher.utter_message(text=f"Dal tuo BMI risulta che sei NORMOPESO, nel caso in cui tu sia interessato a mettere su massa musacolare ecco la dieta per te ")
                dispatcher.utter_message(text=f"https://www.my-personaltrainer.it/alimentazione/esempio-dieta-per-aumentare-massa-muscolare.html")     
           
-          # apri il file pdf
-          # with open('./hello.pdf', 'rb') as f:
-          #      pdf_data = f.read()
-
-          # # crea una stringa di byte
-          # pdf_bytes = io.BytesIO(pdf_data)
-               
-          # # aggiungi l'evento di risposta con il file pdf allegato
-          # dispatcher.utter_attachment(pdf_bytes,"hello.pdf")
+          
 
           return {}
 

@@ -5,6 +5,17 @@ stories:
 - story: calcolo bmi
   steps:
   - intent: saluto
+  - action: nome_form
+  - active_loop: nome_form
+  - slot_was_set:
+    - requested_slot: Enome
+  - slot_was_set:
+    - Enome: minni
+  - slot_was_set:
+    - Enome: Giacomo
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
   - action: utter_ric
   - intent: scelta_dieta
   - action: utter_ric_bmi
@@ -28,4 +39,96 @@ stories:
   - active_loop: null
   - action: utter_submit
   - action: action_calc_bmi
+
+# Storia per la richiesta delle informazioni sul bmi
+
+- story: informazini bmi e calcolo
+  steps:
+  - intent: saluto
+  - action: nome_form
+  - active_loop: nome_form
+  - slot_was_set:
+    - requested_slot: Enome
+  - slot_was_set:
+    - Enome: minni
+  - slot_was_set:
+    - Enome: Giacomo
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_ric
+  - intent: scelta_dieta
+  - action: utter_ric_bmi
+  - intent: informazioni 
+  - action: utter_spiegazione_bmi
+  - action: utter_opzioni_calco_bmi
+  - intent: calcolo_bmi
+  - action: bmi_form
+  - active_loop: bmi_form
+  - slot_was_set:
+    - requested_slot: Epeso
+  - slot_was_set:
+    - Epeso: 67.8
+  - slot_was_set:
+    - Epeso: 102.5
+  - slot_was_set:
+    - requested_slot: Ealtezza
+  - slot_was_set:
+    - Ealtezza: 1.45
+  - slot_was_set:
+    - Ealtezza: 2.2
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_submit
+  - action: action_calc_bmi
+
+- story: l'utente non è interessato al calcolo del bmi 
+  steps:
+  - intent: saluto
+  - action: nome_form
+  - active_loop: nome_form
+  - slot_was_set:
+    - requested_slot: Enome
+  - slot_was_set:
+    - Enome: minni
+  - slot_was_set:
+    - Epeso: Giacomo
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_ric
+  - intent: scelta_dieta
+  - action: utter_ric_bmi
+  - intent: informazioni 
+  - action: utter_spiegazione_bmi
+  - action: utter_opzioni_calco_bmi
+  - intent: scelta_inizio_allenamento 
+  - action: casapalestra_form
+  - active_loop: casapalestra_form
+  - slot_was_set:
+    - requested_slot: Ecasapalestra
+  - slot_was_set:
+    - Ecasapalestra: asa
+  - slot_was_set:
+    - Ecasapalestra: paletra
+  - slot_was_set:
+    - Ecasapalestra: cassa
+  - slot_was_set:
+    - Ecasapalestra: paletra
+  - slot_was_set:
+    - Ecasapalestra: asa
+  - slot_was_set:
+    - Ecasapalestra: paletra
+  - slot_was_set:
+    - Ecasapalestra: palestr
+  - slot_was_set:
+    - Ecasapalestra: aletra
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+
+
+
+
   
