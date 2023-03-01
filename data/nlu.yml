@@ -5,10 +5,8 @@ nlu:
   examples: |
     - ciao
     - salve
-    - bella 
     - buongiorno 
-    - buona sera 
-    - ciao amico
+    - buonasera
 
 - intent: affermazione
   examples: |
@@ -58,6 +56,18 @@ nlu:
     - spiegami di cosa si tratta 
     - voglio sapere delle info   
 
+- intent: scheda_allenamento
+  examples: |
+    - vorrei mi facessi la scheda
+    - voglio la scheda di allenamento
+    - scheda 
+    - scheda di allenamento
+    - crea scheda di allenamento
+    - crea scheda
+    - preferirei iniziare ad allenarmi con una scheda
+    - perfavore producimi la scheda di allenamento iniziale
+  
+
 
 - intent: scelta_inizio_allenamento 
   examples: |
@@ -70,7 +80,7 @@ nlu:
     - preferirei iniziare a definire il piano di allenamento 
     - iniziamo con il piano di allenamento 
 
-- intent: scelta_parte_allenare 
+- intent: scelta_parte_allenare
   examples: |
     - preferirei iniziare ad allenare(gambe)[Escheda]
     - vorrei allenare le (braccia)[Escheda]
@@ -81,9 +91,6 @@ nlu:
     - (braccia)[Escheda]
     - (schiena)[Escheda]
     - (cardio)[Escheda]
-
-
-
     
 
 - intent: scelta_dieta
@@ -119,10 +126,24 @@ nlu:
   examples: |
     - mi chiamo [Luigi](Enome)
     - il mio nome è [Chiara](Enome)
-    - sono [Pippo](Enome)
+    - sono [Luigi](Enome)
     - chiamami pure [Sara](Enome)
     - puoi chiamarmi [Stefano](Enome)
     - [Giulia](Enome)
+    - [Sara](Enome)
+    - [Riccardo](Enome)
+    - sono [Arment](Enome)
+    - salve mi chiamo [Michele](Enome)
+    - il mio nome è [Arment](Enome)
+    - io sono [Claudia](Enome)
+    - sono [Stefano](Enome)
+    - salve io sono [Alessandro](Enome)
+    - piacere [Riccardo](Enome)
+    - mi chiamo [Sara](Enome)
+    - mi chiamo [Francesco](Enome)
+    - mi chiamo [Guido](Enome)
+    - mi chiamo [Arment](Enome)
+    
 
 
 

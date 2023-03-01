@@ -2,6 +2,7 @@ version: "3.1"
 
 intents:
   - saluto
+  - nlu_fallback
   - affermazione 
   - negazione 
   - calcolo_bmi 
@@ -13,7 +14,8 @@ intents:
   - nome
   - scelta_inizio_allenamento 
   - scelta_casa_paestra
-  - scelta_parte_allenare 
+  - scelta_parte_allenare
+  - scheda_allenamento
 
 entities:
   - Epeso
@@ -25,7 +27,7 @@ entities:
 
 slots:
   Epeso:
-    type: text
+    type: float
     # min_value: 20.0
     # max_value: 500.0
     influence_conversation: true
@@ -34,7 +36,7 @@ slots:
       entity: Epeso
   
   Ealtezza:
-    type: text
+    type: float
     # min_value: 0.5
     # max_value: 3.0
     influence_conversation: true
@@ -84,7 +86,7 @@ forms:
 responses:
   
   utter_ric:
-  - text: "{Enome} Preferisci che iniziamo con il definire il tuo piano alimentare, un piano di allenamento oppure gradisci vedere tutti gli esercizi che ti posso offrire?"
+  - text: "Allora {Enome}, preferisci che iniziamo con il definire il tuo piano alimentare, un piano di allenamento oppure gradisci vedere tutti gli esercizi che ti posso offrire?"
 
   utter_ric_bmi:
   - text: "Bene, per capire che tipo di alimentazione seguire è necessario che io calcoli il tuo indice di massa corporea, ovvero il bmi, vuoi avere delle informazioni a riguardo  oppure vuoi che proceda con il calcolo del bmi?"
@@ -100,34 +102,39 @@ responses:
   - text: "il bmi è un particolare numero, ottenuto tramite una certa formula matematica espressa in funzione della tua altezza e del tuo peso, che ci consente di capire lo stato della tua condizione fisica, ovvero, in parole povere, ci permette di capire se sei in forma o meno. Ad ogni modo se vuoi saperne di più ti rimando al seguente link https://www.centrostudigised.it/calcola_il_tuo_bmi.html"
 
   utter_submit:
-  - text: "ho fatto"
+  - text: "Bene, sto procedendo con il calcolo, pochi secondi e conoscerai la dieta migliore da seguire per il tuo fisico!"
 
-  
+  utter_please_rephrase:
+    - text: "Prova a riformulare la frase che non ti ho capito..."
 
-# Utter per le form
+
+
+  # Utter per le form
 
   utter_ask_Epeso:
-  - text: per proseguire con il calcolo del bmi è necessario che tu mi dica il tu peso attuale in Kg
+  - text: Per proseguire con il calcolo del bmi è necessario che tu mi dica il tu peso attuale in chili (kg).
 
   utter_ask_Ealtezza:
-  - text: Mi servirebbe conoscere anche la tua altezza per concludere la procedura di calcolo
+  - text: Mi servirebbe conoscere anche la tua altezza espressa in metri (m) per concludere la procedura di calcolo.
 
   utter_ask_Enome:
   - text: Salve io sono Fit, il tuo personal train, e ti guiderò nei tuoi primi passi nel mondo della palestra, ma prima di iniziare, mi piacerebbe conoscerti meglio, come ti chiami?
 
   utter_ask_Ecasapalestra:
-  - text: ti vuoi allenare a casa o in palestra? Nel coso in cui tu ti voglia allenare a casa, predisporremo un scheda di allenamento che non preveda l'utilizzo di macchianri o bilanceri "
+  - text: Ti vuoi allenare a casa o in palestra? Nel caso in cui tu ti voglia allenare a casa, predisporremo un scheda di allenamento che non preveda l'utilizzo di macchinari o bilanceri "
 
   
 
 actions:
 - utter_ric
+- utter_please_rephrase
 - utter_ric_bmi
 - utter_ric_calc_bmi
 - utter_opzioni_calco_bmi
 - utter_submit
 - utter_spiegazione_bmi
 - action_calc_bmi
+- action_create_scheda
 - validate_bmi_form
 - validate_nome_form
 - validate_casapalestra_form

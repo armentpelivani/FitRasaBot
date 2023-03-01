@@ -2,14 +2,17 @@ version: "3.1"
 
 rules:
 
-# regole attivazione e registro nome
+- rule: Ask the user to rephrase whenever they send a message with low NLU confidence
+  steps:
+  - intent: nlu_fallback
+  - action: utter_please_rephrase
 
+# regole attivazione e registro nome
 - rule: Attivazione nome form
   steps:
   - intent: saluto
   - action: nome_form
   - active_loop: nome_form
-
 
 - rule: Submit nome form
   condition:
@@ -23,7 +26,6 @@ rules:
 
 
 # regole attivazione e registro bmi
-
 - rule: Attivazione bmi form
   steps:
   - intent: calcolo_bmi
@@ -42,7 +44,6 @@ rules:
   - action: action_calc_bmi
 
   # regole attivazione e registro casapalestra form
-
 - rule: Attivazione casapalestra form
   steps:
     - intent: scelta_inizio_allenamento 
@@ -57,3 +58,10 @@ rules:
   - active_loop: null
   - slot_was_set:
     - requested_slot: null
+
+
+# regola richiesta scheda di allenamento
+- rule: Richiesta scheda di allenamento
+  steps:
+  - intent: scheda_allenamento
+  - action: action_create_scheda
