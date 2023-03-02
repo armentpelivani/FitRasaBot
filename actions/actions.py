@@ -15,9 +15,9 @@ from rasa_sdk.types import DomainDict
 import random
 import pandas as pd
 from pandas.plotting import table
-import dataframe_image as dfi
 import plotly.figure_factory as ff
 import plotly.graph_objs as go
+import imgbbpy
 import numpy as np
 import matplotlib.pyplot as plt
 import tabulate
@@ -25,7 +25,6 @@ from tabulate import tabulate
 import os
 import requests
 import csv
-from imgur_python import Imgur
 from os import path
 import warnings
 warnings.filterwarnings("ignore")
@@ -161,29 +160,23 @@ class ActionCreateScheda(Action):
 
         # TODO: Andare a generare la scheda per l'utente sulla base degli slot settati
 
-        # BT: 0ab4fb1600d1b92585cfd70a1fcef76d813c62a4
+
         fig = ff.create_table(df[['es_name', 'target']])
         fig.update_layout(autosize=True, title_text='Scheda esercizi', margin={'t': 40, 'b': 20})
         fig.write_image("scheda.png", scale=2)
 
-        imgur_client = Imgur({'client_id': '9d34aee8442dac3'})
-        file = path.realpath('./scheda.png')
-        title = 'Scheda esercizi'
-        description = ''
-        album = None
-        disable_audio = 0
-        response = imgur_client.image_upload(file, title, description, album, disable_audio)
-        #print(response['response']['data']['link'])
+        client = imgbbpy.SyncClient('b8e02f4fc7878ae94060c35ba45fa540')
+        image = client.upload(file='scheda.png')
+        #print(image.url)
         os.remove('scheda.png')
 
 
         dispatcher.utter_message(
-                text=f"Scheda creata! Visualizzala al seguente link: {response['response']['data']['link']}")
+                text=f"Scheda creata! Visualizzala al seguente link: {image.url}")
 
         return {}
 
-# Azione per la creazinoe di pulsanti 
-
+# Azione per la creazinoe di pulsanti
 class AskEserciziInfo(Action):
     def name(self) -> Text:
         return "action_ask_Eesercizi"
@@ -203,8 +196,6 @@ class AskEserciziInfo(Action):
 class ValidateEserciziForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_esercizi_form"
-
-
     def validate_Eesercizi(
         self,
         slot_value: Any,

@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e74bb82-9dbe-4ffc-80e8-fc1a4ee93d23" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/actions/actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/csv esercizi.csv" beforeDir="false" afterPath="$PROJECT_DIR$/esercizi.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/nlu.yml" beforeDir="false" afterPath="$PROJECT_DIR$/data/nlu.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/rules.yml" beforeDir="false" afterPath="$PROJECT_DIR$/data/rules.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain.yml" beforeDir="false" afterPath="$PROJECT_DIR$/domain.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appunti.txt" beforeDir="false" afterPath="$PROJECT_DIR$/appunti.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheda.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,20 +26,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "E:/Documenti/GitHub/FitRasaBot",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Documenti/GitHub/FitRasaBot&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -54,6 +53,7 @@
       <workItem from="1677603828120" duration="503000" />
       <workItem from="1677675471324" duration="353000" />
       <workItem from="1677676646100" duration="13273000" />
+      <workItem from="1677750372192" duration="486000" />
     </task>
     <servers />
   </component>
