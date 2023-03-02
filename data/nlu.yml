@@ -176,6 +176,12 @@ nlu:
     - vorrei allenarmi in [palestra](Ecasapalestra)
     - vorrei allenarmi a [casa](Ecasapalestra)
 
+- intent: richiesta_elenco_esercizi
+  examples: |
+    - vorrei vedere elenco degli esercizi
+    - elenco esercizi 
+    - lista esercizi
+
 
 
 

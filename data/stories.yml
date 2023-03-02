@@ -127,6 +127,18 @@ stories:
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
+  - intent: richiesta_elenco_esercizi
+  - action: esercizi_form 
+  - active_loop: esercizi_form
+  - slot_was_set:
+    - requested_slot: Eesercizi
+  - slot_was_set:
+    - Eesercizi: true
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_submit
+
 
 
 

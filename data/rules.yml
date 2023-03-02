@@ -65,3 +65,20 @@ rules:
   steps:
   - intent: scheda_allenamento
   - action: action_create_scheda
+
+# regole attivazine bottoni esercizi 
+- rule: Attivazione esercizi form
+  steps:
+    - intent: richiesta_elenco_esercizi
+    - action: esercizi_form
+    - active_loop: esercizi_form
+
+- rule: Submit esercizi form
+  condition:
+  - active_loop: esercizi_form
+  steps:
+  - action: esercizi_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_submit

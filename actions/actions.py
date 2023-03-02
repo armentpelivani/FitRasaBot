@@ -181,3 +181,40 @@ class ActionCreateScheda(Action):
                 text=f"Scheda creata! Visualizzala al seguente link: {response['response']['data']['link']}")
 
         return {}
+
+# Azione per la creazinoe di pulsanti 
+
+class AskEserciziInfo(Action):
+    def name(self) -> Text:
+        return "action_ask_Eesercizi"
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[EventType]:
+        dispatcher.utter_message(
+            text="Questi sono alcuni dei nostri esercizi",
+            buttons=[
+                {"title":"esercizio1","payload":"/affermazione"}
+            ],
+
+        )
+        return[]
+
+
+class ValidateEserciziForm(FormValidationAction):
+    def name(self) -> Text:
+        return "validate_esercizi_form"
+
+
+    def validate_Eesercizi(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        """Validate `pizza_size` value."""
+        if tracker.get_intent_of_latest_message() == "affermazione":
+            dispatcher.utter_message(
+                text="questa è la descrizione dell' esercizio"
+            )
+        return {"Eesercizi": True}
