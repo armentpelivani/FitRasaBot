@@ -31,7 +31,20 @@ warnings.filterwarnings("ignore")
 
 
 df = pd.read_csv('./esercizi.csv', encoding='utf-8', sep=';')
-print(df.head(), df.shape)
+#print(df.head(), df.shape)
+
+# estraggo i sottodataframe
+schienadf = df.loc[1:6] 
+bracciadf = df.loc[7:13]
+gambedf = df.loc[14:20]
+bustodf = df.loc[21:28]
+
+# mi creo i dataframe con gli indici di colonna randomici
+
+schienadf.index=np.random.permutation(np.arange(len(schienadf)))
+bracciadf.index=np.random.permutation(np.arange(len(bracciadf)))
+gambedf.index=np.random.permutation(np.arange(len(gambedf)))
+bustodf.index=np.random.permutation(np.arange(len(bustodf)))
 
 
 
@@ -176,6 +189,73 @@ class ActionCreateScheda(Action):
 
         return {}
 
+class ValidateEserciziForm(FormValidationAction):
+    def name(self) -> Text:
+        return "validate_esercizi_form"
+    
+    def validate_Eesercizi(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+        ) -> Dict[Text, Any]:
+        if tracker.get_intent_of_latest_message() == "affermazione":
+            dispatcher.utter_message(
+                text="questa è la descrizione dell' esercizio"
+            )
+        return {"Eesercizi": True}
+    
+class ValidateCorpoAllenamentoForm(FormValidationAction):
+    def name(self) -> Text:
+        return "validate_corpoallenamento_form"
+    
+    def validate_Ecorpoallenamento(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+        ) -> Dict[Text, any]:
+        # mi costruisco il dataset degli esercizi per le gambe 
+        #gambedf = df.loc[14:20]
+        #genero in maniera randomica e non ripetitiva gli indici del dataframe degli esercizi gambe 
+        gambedf.index=np.random.permutation(np.arange(len(gambedf)))
+        
+
+        
+        if slot_value == ("gambe"):
+
+            dispatcher.utter_message(
+                buttons= [
+                    {"title":str(gambedf.iloc[0]['es_name']) ,"payload":str(gambedf.iloc[0]['desc'])},
+                    {"title":str(gambedf.iloc[1]['es_name']) ,"payload":str(gambedf.iloc[1]['desc'])},
+                    {"title":str(gambedf.iloc[2]['es_name']) ,"payload":str(gambedf.iloc[2]['desc'])},
+                    {"title":str(gambedf.iloc[3]['es_name']) ,"payload":str(gambedf.iloc[3]['desc'])}
+                    ])
+
+
+        elif slot_value == ("braccia"):
+             dispatcher.utter_message(
+                text="questi sono gli esercizi delle braccia"
+            )
+        elif slot_value == ("schiena"):
+             dispatcher.utter_message(
+                text="questi sono gli esercizi delle schiena"
+            )
+        elif slot_value == ("busto"):
+             dispatcher.utter_message(
+                text="questi sono gli esercizi delle busto"
+            )
+        else:
+            dispatcher.utter_message(
+                text="la tua richiesta non è valida (grupby colonne dataframe)"
+            )
+        return {"Ecorpoallenamento" : slot_value }
+
+
+
+
 # Azione per la creazinoe di pulsanti
 class AskEserciziInfo(Action):
     def name(self) -> Text:
@@ -183,29 +263,5 @@ class AskEserciziInfo(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[EventType]:
-        dispatcher.utter_message(
-            text="Questi sono alcuni dei nostri esercizi",
-            buttons=[
-                {"title":"esercizio1","payload":"/affermazione"}
-            ],
-
-        )
+        
         return[]
-
-
-class ValidateEserciziForm(FormValidationAction):
-    def name(self) -> Text:
-        return "validate_esercizi_form"
-    def validate_Eesercizi(
-        self,
-        slot_value: Any,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: DomainDict,
-    ) -> Dict[Text, Any]:
-        """Validate `pizza_size` value."""
-        if tracker.get_intent_of_latest_message() == "affermazione":
-            dispatcher.utter_message(
-                text="questa è la descrizione dell' esercizio"
-            )
-        return {"Eesercizi": True}

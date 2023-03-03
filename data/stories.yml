@@ -127,18 +127,65 @@ stories:
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
+  
+  # Pulsante 
+  # - intent: richiesta_elenco_esercizi
+  # - action: esercizi_form 
+  # - active_loop: esercizi_form
+  # - slot_was_set:
+  #   - requested_slot: Eesercizi
+  # - slot_was_set:
+  #   - Eesercizi: true
+  # - slot_was_set:
+  #   - requested_slot: null
+  # - active_loop: null
+  # - action: utter_submit
+
+- story: l'utente non è interessato al calcolo del bmi e vuole delle info sugli esercizi a disposizione 
+  steps:
+  - intent: saluto
+  - action: nome_form
+  - active_loop: nome_form
+  - slot_was_set:
+    - requested_slot: Enome
+  - slot_was_set:
+    - Enome: minni
+  - slot_was_set:
+    - Epeso: Giacomo
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_ric
+  - intent: scelta_dieta
+  - action: utter_ric_bmi
+  - intent: informazioni 
+  - action: utter_spiegazione_bmi
+  - action: utter_opzioni_calco_bmi
   - intent: richiesta_elenco_esercizi
-  - action: esercizi_form 
-  - active_loop: esercizi_form
+  - action: corpoallenamento_form
+  - active_loop: corpoallenamento_form
   - slot_was_set:
-    - requested_slot: Eesercizi
+    - requested_slot: Ecorpoallenamento
   - slot_was_set:
-    - Eesercizi: true
+    - Ecorpoallenamento: sciena
+  - slot_was_set:
+    - Ecorpoallenamento: bracia
+  - slot_was_set:
+    - Ecorpoallenamento: gabe
+  - slot_was_set:
+    - Ecorpoallenamento: game
+  - slot_was_set:
+    - Ecorpoallenamento: busto
+  - slot_was_set:
+    - Ecorpoallenamento: bustto
+  - slot_was_set:
+    - Ecorpoallenamento: brcie
+  - slot_was_set:
+    - Ecorpoallenamento: braia
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
   - action: utter_submit
-
 
 
 

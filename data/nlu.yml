@@ -180,7 +180,24 @@ nlu:
   examples: |
     - vorrei vedere elenco degli esercizi
     - elenco esercizi 
-    - lista esercizi
+    - lista 
+    - elenco degli esercizi 
+    - voglio vedere gli esercizi per categoria 
+
+- intent: scelta_categoria_allenamento
+  examples: |
+    - [gambe](Ecorpoallenamento)
+    - [schiena](Ecorpoallenamento)
+    - [braccia](Ecorpoallenamento)
+    - [busto](Ecorpoallenamento)
+    - vorrei vedere la categorie delle [gambe](Ecorpoallenamento)
+    - categoria [braccia](Ecorpoallenamento)
+    - voglio vedere la [schiena](Ecorpoallenamento)
+
+
+
+
+
 
 
 

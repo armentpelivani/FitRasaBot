@@ -17,6 +17,7 @@ intents:
   - scelta_parte_allenare
   - scheda_allenamento
   - richiesta_elenco_esercizi
+  - scelta_categoria_allenamento
 
 entities:
   - Epeso
@@ -24,6 +25,7 @@ entities:
   - Enome
   - Ecasapalestra
   - Escheda
+  - Ecorpoallenamento
 
 
 slots:
@@ -66,6 +68,13 @@ slots:
     - type: from_entity
       entity: Escheda
   
+  Ecorpoallenamento:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: Ecorpoallenamento 
+  
   Eesercizi:
     type: bool
     influence_conversation: true
@@ -99,6 +108,10 @@ forms:
     required_slots:
       - Eesercizi
 
+  corpoallenamento_form:
+    required_slots:
+      - Ecorpoallenamento
+
 
 responses:
   
@@ -112,7 +125,7 @@ responses:
   - text:  "Vogliamo procedere con il calcolo del bmi?"
 
   utter_opzioni_calco_bmi:
-  - text: "Preferisci proseguire con il calcolo, oppure preferisci che iniziamo ad allenarci?"
+  - text: "Preferisci proseguire con il calcolo, che iniziamo ad allenarci, oppure vuoi vedere l'elenco degli esercizi che abbiamo a disposizione?"
 
   
   utter_spiegazione_bmi:
@@ -140,6 +153,8 @@ responses:
   utter_ask_Ecasapalestra:
   - text: Ti vuoi allenare a casa o in palestra? Nel caso in cui tu ti voglia allenare a casa, predisporremo un scheda di allenamento che non preveda l'utilizzo di macchinari o bilanceri "
 
+  utter_ask_Ecorpoallenamento:
+  - text: gli esercizi sono categorizati in base alla parte del corpo, quale categoria vuoi conoscere? gambe, braccia, schiena oppure busto?
   
 
 actions:
@@ -157,6 +172,7 @@ actions:
 - validate_nome_form
 - validate_casapalestra_form
 - validate_esercizi_form
+- validate_corpoallenamento_form
 
 
 
