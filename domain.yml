@@ -31,8 +31,6 @@ entities:
 slots:
   Epeso:
     type: float
-    # min_value: 20.0
-    # max_value: 500.0
     influence_conversation: true
     mappings:
     - type: from_entity
@@ -40,8 +38,6 @@ slots:
   
   Ealtezza:
     type: float
-    # min_value: 0.5
-    # max_value: 3.0
     influence_conversation: true
     mappings:
     - type: from_entity
@@ -140,7 +136,6 @@ responses:
 
 
   # Utter per le form
-
   utter_ask_Epeso:
   - text: Per proseguire con il calcolo del bmi è necessario che tu mi dica il tu peso attuale in chili (kg).
 
@@ -168,6 +163,7 @@ actions:
 - action_calc_bmi
 - action_create_scheda
 - action_ask_Eesercizi
+- action_esercizi
 - validate_bmi_form
 - validate_nome_form
 - validate_casapalestra_form

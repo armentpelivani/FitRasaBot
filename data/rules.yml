@@ -2,6 +2,8 @@ version: "3.1"
 
 rules:
 
+# TODO: Serve una rule di ringraziamento cosi da poter riniziare la conversazione
+
 - rule: Ask the user to rephrase whenever they send a message with low NLU confidence
   steps:
   - intent: nlu_fallback
@@ -98,5 +100,5 @@ rules:
   - active_loop: null
   - slot_was_set:
     - requested_slot: null
-  - action: utter_submit
+  - action: action_esercizi
   

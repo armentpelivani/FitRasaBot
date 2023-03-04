@@ -141,7 +141,7 @@ stories:
   # - active_loop: null
   # - action: utter_submit
 
-- story: l'utente non è interessato al calcolo del bmi e vuole delle info sugli esercizi a disposizione 
+- story: l'utente vuole delle info sugli esercizi a disposizione
   steps:
   - intent: saluto
   - action: nome_form
@@ -156,11 +156,6 @@ stories:
     - requested_slot: null
   - active_loop: null
   - action: utter_ric
-  - intent: scelta_dieta
-  - action: utter_ric_bmi
-  - intent: informazioni 
-  - action: utter_spiegazione_bmi
-  - action: utter_opzioni_calco_bmi
   - intent: richiesta_elenco_esercizi
   - action: corpoallenamento_form
   - active_loop: corpoallenamento_form
@@ -185,7 +180,7 @@ stories:
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
-  - action: utter_submit
+  - action: action_esercizi
 
 
 
