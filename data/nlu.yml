@@ -193,6 +193,51 @@ nlu:
     - vorrei vedere la categorie delle [gambe](Ecorpoallenamento)
     - categoria [braccia](Ecorpoallenamento)
     - voglio vedere la [schiena](Ecorpoallenamento)
+- intent: richiesta_info_esercizio
+  examples: |
+    - vorrei informazioni su [Lat pulldown](Eesercizio)
+    - spiegami come si fa il [Back extension](Eesercizio)
+    - voglio capire il [Quadruped single-arm dumbbell row](Eesercizio)
+    - [One-arm dumbbell push press](Eesercizio)
+    - [Plank dumbbell shoulder raise](Eesercizio)
+    - [Trap Bar Deadlifts](Eesercizio)
+    - [Overhead Presses](Eesercizio)
+    - [Seated military press](Eesercizio)
+    - [Front squat](Eesercizio)
+    - [Walking lunges](Eesercizio)
+
+- lookup: Eesercizio
+  examples: |
+    - Lat pulldown
+    - Back extension
+    - Suspended row
+    - Wood chop
+    - Good morning
+    - Quadruped single-arm dumbbell row
+    - Wide dumbbell bent-over row
+    - Dumbbell front raise
+    - Dumbbell lateral raise
+    - Reverse fly
+    - Seated military press
+    - Standing dumbbell shoulder press
+    - One-arm dumbbell push press
+    - Plank dumbbell shoulder raise
+    - Back squat
+    - Front squat
+    - Romanian deadlift
+    - Walking lunges
+    - Reverse lunge
+    - Lateral lunge
+    - Stepup
+    - Overhead Presses
+    - Trap Bar Deadlifts
+    - Pullups and Chinups
+    - Bent-Over Barbell Rows
+    - Seated Cable Rows
+    - Plank Walkouts
+    - Hanging Leg Raises
+    - Dumbbell Bench Presses
+
 
 
 

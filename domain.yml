@@ -17,6 +17,7 @@ intents:
   - scelta_parte_allenare
   - scheda_allenamento
   - richiesta_elenco_esercizi
+  - richiesta_info_esercizio
   - scelta_categoria_allenamento
 
 entities:
@@ -26,6 +27,7 @@ entities:
   - Ecasapalestra
   - Escheda
   - Ecorpoallenamento
+  - Eesercizio
 
 
 slots:
@@ -71,16 +73,14 @@ slots:
     - type: from_entity
       entity: Ecorpoallenamento 
   
-  Eesercizi:
-    type: bool
+  Eesercizio:
+    type: text
     influence_conversation: true
     mappings:
-    - type: from_intent
-      value: true
-      intent: affermazione
-      conditions:
-        - active_loop: esercizi_form
-          requested_slot: Eesercizi
+    - type: from_entity
+      entity: Eesercizio
+    
+    
 
 forms:
   bmi_form:
@@ -100,13 +100,10 @@ forms:
     required_slots:
       - Escheda
 
-  esercizi_form:
-    required_slots:
-      - Eesercizi
-
   corpoallenamento_form:
     required_slots:
       - Ecorpoallenamento
+      - Eesercizio
 
 
 responses:
@@ -162,12 +159,10 @@ actions:
 - utter_spiegazione_bmi
 - action_calc_bmi
 - action_create_scheda
-- action_ask_Eesercizi
-- action_esercizi
+- action_ask_Eesercizio
 - validate_bmi_form
 - validate_nome_form
 - validate_casapalestra_form
-- validate_esercizi_form
 - validate_corpoallenamento_form
 
 

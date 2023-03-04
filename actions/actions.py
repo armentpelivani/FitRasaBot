@@ -189,9 +189,9 @@ class ActionCreateScheda(Action):
         return {}
 
 
-class ActionEsercizi(Action):
+class  AskForEeserciziAction(Action):
     def name(self) -> Text:
-        return "action_esercizi"
+        return "action_ask_Eesercizio"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
@@ -208,27 +208,11 @@ class ActionEsercizi(Action):
 
         # generazione bottoni
         dispatcher.utter_message(text="Clicca su uno degli esercizi per avere più informazioni.",
-                                 buttons=[{"title": str(es['es_name']), "payload": ""} for idx, es in exs.iterrows()])
+                                 buttons=[{"title": str(es['es_name']), "payload":str(es['es_name']) } for idx, es in exs.iterrows()])
 
         return [SlotSet("Ecorpoallenamento", None)]
 
 
-class ValidateEserciziForm(FormValidationAction):
-    def name(self) -> Text:
-        return "validate_esercizi_form"
-
-    def validate_Eesercizi(
-            self,
-            slot_value: Any,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: DomainDict,
-    ) -> Dict[Text, Any]:
-        if tracker.get_intent_of_latest_message() == "affermazione":
-            dispatcher.utter_message(
-                text="questa è la descrizione dell' esercizio"
-            )
-        return {"Eesercizi": True}
 
 
 class ValidateCorpoAllenamentoForm(FormValidationAction):
@@ -257,13 +241,18 @@ class ValidateCorpoAllenamentoForm(FormValidationAction):
             dispatcher.utter_message(
                 text=f"OK! Di seguito troverai alcuni esercizi del blocco '{slot_value.capitalize()}'")
         return {"Ecorpoallenamento": slot_value.capitalize()}
-
-
-class AskEserciziInfo(Action):
-    def name(self) -> Text:
-        return "action_ask_Eesercizi"
-
-    def run(self, dispatcher: CollectingDispatcher,
+    
+# validazione dell' esercizio selezionato
+    def validate_Eesercizio(
+            self,
+            slot_value: Any,
+            dispatcher: CollectingDispatcher,
             tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[EventType]:
-        return []
+            domain: DomainDict,
+    ) -> Dict[Text, any]:
+        esercizioin = str(tracker.get_slot('Eesercizio'))
+        descrizione = str(df.loc[df['es_name'] == esercizioin,'desc'])
+
+        dispatcher.utter_message(text=f"{descrizione}")
+
+        return[SlotSet("Ecorpoallenamento", None)]
