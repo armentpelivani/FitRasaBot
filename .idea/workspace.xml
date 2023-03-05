@@ -8,9 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/actions/actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/nlu.yml" beforeDir="false" afterPath="$PROJECT_DIR$/data/nlu.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/rules.yml" beforeDir="false" afterPath="$PROJECT_DIR$/data/rules.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/stories.yml" beforeDir="false" afterPath="$PROJECT_DIR$/data/stories.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain.yml" beforeDir="false" afterPath="$PROJECT_DIR$/domain.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +54,7 @@
       <workItem from="1677676646100" duration="13273000" />
       <workItem from="1677750372192" duration="486000" />
       <workItem from="1677918856135" duration="11931000" />
+      <workItem from="1678007833259" duration="5023000" />
     </task>
     <servers />
   </component>

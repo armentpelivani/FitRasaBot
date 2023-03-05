@@ -32,6 +32,7 @@ warnings.filterwarnings("ignore")
 
 df = pd.read_csv('./esercizi.csv', encoding='utf-8', sep=';')
 remain = df
+exs = None
 print(df.head(), df.shape)
 
 
@@ -189,7 +190,7 @@ class ActionCreateScheda(Action):
         return {}
 
 
-class  AskForEeserciziAction(Action):
+class AskForEeserciziAction(Action):
     def name(self) -> Text:
         return "action_ask_Eesercizio"
 
@@ -197,7 +198,7 @@ class  AskForEeserciziAction(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> Any:
 
-        global remain
+        global remain, exs
         # genero in maniera randomica e unica gli esercizi del blocco scelto
         # poi aggiorno gli esercizi che ancora non sono stati mostrati
         exs = remain[remain["target"] == tracker.get_slot("Ecorpoallenamento")]
@@ -208,7 +209,9 @@ class  AskForEeserciziAction(Action):
 
         # generazione bottoni
         dispatcher.utter_message(text="Clicca su uno degli esercizi per avere più informazioni.",
-                                 buttons=[{"title": str(es['es_name']), "payload":str(es['es_name']) } for idx, es in exs.iterrows()])
+                                 buttons=[{"title": str(es['es_name']),
+                                           "payload":'/richiesta_info_esercizio{"Eesercizio":"'+str(es['es_name'])+'"}'}
+                                          for idx, es in exs.iterrows()])
 
         return [SlotSet("Ecorpoallenamento", None)]
 
@@ -249,10 +252,18 @@ class ValidateCorpoAllenamentoForm(FormValidationAction):
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: DomainDict,
-    ) -> Dict[Text, any]:
+    ) -> Any:
+        global exs
         esercizioin = str(tracker.get_slot('Eesercizio'))
-        descrizione = str(df.loc[df['es_name'] == esercizioin,'desc'])
+        descrizione = df[df['es_name'] == esercizioin].iloc[0]['desc']
 
-        dispatcher.utter_message(text=f"{descrizione}")
+        dispatcher.utter_message(text=f"{esercizioin}: {descrizione}")
 
-        return[SlotSet("Ecorpoallenamento", None)]
+        '''# generazione bottoni
+        dispatcher.utter_message(text="Clicca su uno degli esercizi per avere più informazioni.",
+                                 buttons=[{"title": str(es['es_name']),
+                                           "payload": '/richiesta_info_esercizio{"Eesercizio":"' + str(
+                                               es['es_name']) + '"}'}
+                                          for idx, es in exs.iterrows()])'''
+
+        return[SlotSet("Eesercizio", None)]
