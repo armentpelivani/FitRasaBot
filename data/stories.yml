@@ -178,16 +178,28 @@ stories:
   - slot_was_set:
     - Ecorpoallenamento: braia
   - slot_was_set:
-    - requested_slot: Eesercizio
-  - slot_was_set:
-    - Eesercizi: Dumbbell front raise
-  - slot_was_set:
-    - requested_slot: Eesercizio
-  - slot_was_set:
-    - Eesercizi: Reverse fly
-  - slot_was_set:
-    - requested_slot: null
+      - requested_slot: null
   - active_loop: null
+  - action: action_ask_Eesercizio
+  - intent: richiesta_info_esercizio
+  - action: info_esercizio_form
+  - active_loop: info_esercizio_form
+  - slot_was_set:
+    - requested_slot: Eesercizio
+  - slot_was_set:
+    - Eesercizio: Dumbbell front raise
+  - slot_was_set:
+    - requested_slot: Eesercizio
+  - slot_was_set:
+    - Eesercizio: Reverse fly
+  - slot_was_set:
+    - requested_slot: Eesercizio
+  - slot_was_set:
+      - Eesercizio: Reverse fly
+  - slot_was_set:
+      - requested_slot: null
+  - active_loop: null
+  - action: action_get_info_es
 
 
 

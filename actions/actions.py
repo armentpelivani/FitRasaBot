@@ -216,6 +216,29 @@ class AskForEeserciziAction(Action):
         return [SlotSet("Ecorpoallenamento", None)]
 
 
+class GetInfoEs(Action):
+    def name(self) -> Text:
+        return "action_get_info_es"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> Any:
+        global exs
+        esercizioin = str(tracker.get_slot('Eesercizio'))
+        descrizione = df[df['es_name'] == esercizioin].iloc[0]['desc']
+
+        dispatcher.utter_message(text=f"{esercizioin}: {descrizione}")
+
+
+        # generazione bottoni
+        dispatcher.utter_message(text="Clicca su uno degli esercizi per avere più informazioni.",
+                                 buttons=[{"title": str(es['es_name']),
+                                           "payload": '/richiesta_info_esercizio{"Eesercizio":"' + str(
+                                               es['es_name']) + '"}'}
+                                          for idx, es in exs.iterrows()])
+
+        return [SlotSet("Eesercizio", None)]
+
 
 
 class ValidateCorpoAllenamentoForm(FormValidationAction):
@@ -243,7 +266,7 @@ class ValidateCorpoAllenamentoForm(FormValidationAction):
         else:
             dispatcher.utter_message(
                 text=f"OK! Di seguito troverai alcuni esercizi del blocco '{slot_value.capitalize()}'")
-        return {"Ecorpoallenamento": slot_value.capitalize()}
+        return {"Ecorpoallenamento": slot_value.capitalize(), "Eesercizio": None}
     
 # validazione dell' esercizio selezionato
     def validate_Eesercizio(
@@ -253,17 +276,5 @@ class ValidateCorpoAllenamentoForm(FormValidationAction):
             tracker: Tracker,
             domain: DomainDict,
     ) -> Any:
-        global exs
-        esercizioin = str(tracker.get_slot('Eesercizio'))
-        descrizione = df[df['es_name'] == esercizioin].iloc[0]['desc']
 
-        dispatcher.utter_message(text=f"{esercizioin}: {descrizione}")
-
-        '''# generazione bottoni
-        dispatcher.utter_message(text="Clicca su uno degli esercizi per avere più informazioni.",
-                                 buttons=[{"title": str(es['es_name']),
-                                           "payload": '/richiesta_info_esercizio{"Eesercizio":"' + str(
-                                               es['es_name']) + '"}'}
-                                          for idx, es in exs.iterrows()])'''
-
-        return[SlotSet("Eesercizio", None)]
+        return {}

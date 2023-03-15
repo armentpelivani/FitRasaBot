@@ -85,7 +85,6 @@ rules:
 #     - requested_slot: null
 
 # regola attivazione form per la parte del corpo
-
 - rule: Attivazione corpoallenamento form
   steps:
     - intent: richiesta_elenco_esercizi
@@ -100,5 +99,24 @@ rules:
   - active_loop: null
   - slot_was_set:
     - requested_slot: null
+  - action: action_ask_Eesercizio
+
+# regola attivazione form per info sugli esercizi
+- rule: Attivazione info esercizio form
+  steps:
+    - intent: richiesta_info_esercizio
+    - action: info_esercizio_form
+    - active_loop: info_esercizio_form
+
+- rule: Submit info esercizio form
+  condition:
+  - active_loop: info_esercizio_form
+  steps:
+  - action: info_esercizio_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_get_info_es
+
 
   

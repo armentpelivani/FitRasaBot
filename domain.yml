@@ -103,8 +103,10 @@ forms:
   corpoallenamento_form:
     required_slots:
       - Ecorpoallenamento
-      - Eesercizio
 
+  info_esercizio_form:
+    required_slots:
+      - Eesercizio
 
 responses:
   
@@ -160,6 +162,7 @@ actions:
 - action_calc_bmi
 - action_create_scheda
 - action_ask_Eesercizio
+- action_get_info_es
 - validate_bmi_form
 - validate_nome_form
 - validate_casapalestra_form

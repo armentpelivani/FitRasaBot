@@ -193,6 +193,7 @@ nlu:
     - vorrei vedere la categorie delle [gambe](Ecorpoallenamento)
     - categoria [braccia](Ecorpoallenamento)
     - voglio vedere la [schiena](Ecorpoallenamento)
+
 - intent: richiesta_info_esercizio
   examples: |
     - vorrei informazioni su [Lat pulldown](Eesercizio)
