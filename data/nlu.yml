@@ -72,25 +72,14 @@ nlu:
 - intent: scelta_inizio_allenamento 
   examples: |
     - preferirei iniziare ad allenarmi 
+    - generami un piano allenamento
     - iniziamo ad allenarci 
     - alleniamoci va 
     - preferirei iniziare con gli allenamenti 
     - allenamenti 
-    - allenamento 
+    - fammi vedere un piano allenamento 
     - preferirei iniziare a definire il piano di allenamento 
     - iniziamo con il piano di allenamento 
-
-- intent: scelta_parte_allenare
-  examples: |
-    - preferirei iniziare ad allenare(gambe)[Escheda]
-    - vorrei allenare le (braccia)[Escheda]
-    - mi picaerebbe allenare le (gambe)[Escheda]
-    - alleniamo la (schiena)[Escheda]
-    - vorrei fare(cardio)[Escheda]
-    - (gambe)[Escheda]
-    - (braccia)[Escheda]
-    - (schiena)[Escheda]
-    - (cardio)[Escheda]
     
 
 - intent: scelta_dieta
@@ -168,7 +157,7 @@ nlu:
 
 - intent: scelta_casa_palestra 
   examples: |
-    - mi allenando a [casa](Ecasapalestra)
+    - mi allenerò a [casa](Ecasapalestra)
     - preferisco allenarmi in [palestra](Ecasapalestra)
     - [casa](Ecasapalestra)
     - [palestra](Ecasapalestra)
@@ -187,7 +176,7 @@ nlu:
     - elenco degli esercizi 
     - voglio vedere gli esercizi per categoria 
 
-- intent: scelta_categoria_allenamento
+- intent: scelta_categoria_esercizio
   examples: |
     - [gambe](Etargetcorpo)
     - [schiena](Etargetcorpo)

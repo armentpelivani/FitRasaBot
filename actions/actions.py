@@ -97,7 +97,6 @@ class ValidateNomeForm(FormValidationAction):
 
 
 class ValidateCasaPalestraForm(FormValidationAction):
-
     def name(self) -> Text:
         return "validate_casapalestra_form"
 
@@ -108,8 +107,15 @@ class ValidateCasaPalestraForm(FormValidationAction):
             tracker: Tracker,
             domain: DomainDict,
     ) -> Dict[Text, Any]:
-        dispatcher.utter_message(text=f" hai scelto di allenarti in {slot_value}")
-        return {"Ecasapalestra": slot_value}
+
+        if slot_value.lower() in ['casa', 'palestra']:
+            dispatcher.utter_message(text=f" Hai scelto di allenarti in {slot_value}!")
+            dispatcher.utter_message(response="utter_generate_scheda")
+
+            return {"Ecasapalestra": slot_value.lower()}
+        else:
+            dispatcher.utter_message(text="Mi sa che non ho capito bene...")
+            return {"Ecasapalestra": None}
 
 
 class ActionBmi(Action):
@@ -172,10 +178,14 @@ class ActionCreateScheda(Action):
              'Peso': peso, 'Tempo di recupero': tempo_recupero})
         df = df.set_index('Nome esercizi')
         # Visualizzazione del DataFrame
-        print(df)
+        #print(df)
 
-        fig = ff.create_table(df, index=True, index_title='ESERCIZI')
-        fig.update_layout(autosize=True, title_text='Scheda esercizi', margin={'t': 40, 'b': 20})
+        fig = ff.create_table(df, index=True, index_title='Esercizi')
+        fig.update_layout(autosize=True, title_text=f'Scheda esercizi di:            {tracker.get_slot("Enome")}',
+                          margin={'t': 40},
+                          width=1270,
+                          height=720,
+                          )
         fig.write_image("scheda.png", scale=2)
 
         client = imgbbpy.SyncClient('b8e02f4fc7878ae94060c35ba45fa540')
@@ -186,7 +196,7 @@ class ActionCreateScheda(Action):
         dispatcher.utter_message(
             text=f"Scheda creata! Visualizzala al seguente link: {image.url}")
 
-        return {}
+        return [SlotSet("Ecasapalestra", None)]
 
 class AskForTargetCorpo(Action):
     def name(self) -> Text:

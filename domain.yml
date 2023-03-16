@@ -3,22 +3,21 @@ version: "3.1"
 intents:
   - saluto
   - nlu_fallback
-  - affermazione 
-  - negazione 
-  - calcolo_bmi 
+  - affermazione
+  - negazione
+  - calcolo_bmi
   - parametriBmi
   - request_bmi_form
   - scelta_dieta
   - not_opzioni
-  - informazioni 
+  - informazioni
   - nome
-  - scelta_inizio_allenamento 
+  - scelta_inizio_allenamento
   - scelta_casa_palestra
-  - scelta_parte_allenare
   - scheda_allenamento
   - richiesta_elenco_esercizi
+  - scelta_categoria_esercizio
   - richiesta_info_esercizio
-  - scelta_categoria_allenamento
 
 entities:
   - Epeso
@@ -37,21 +36,21 @@ slots:
     mappings:
     - type: from_entity
       entity: Epeso
-  
+
   Ealtezza:
     type: float
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: Epeso
-  
+
   Enome:
     type: text
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: Enome
-  
+
   Ecasapalestra:
     type: text
     influence_conversation: true
@@ -65,29 +64,29 @@ slots:
     mappings:
     - type: from_entity
       entity: Escheda
-  
+
   Etargetcorpo:
     type: text
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: Etargetcorpo
-  
+
   Eesercizio:
     type: text
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: Eesercizio
-    
-    
+
+
 
 forms:
   bmi_form:
     required_slots:
       - Epeso
       - Ealtezza
-  
+
   nome_form:
     required_slots:
       - Enome
@@ -95,7 +94,7 @@ forms:
   casapalestra_form:
     required_slots:
       - Ecasapalestra
-  
+
   scheda_form:
     required_slots:
       - Escheda
@@ -109,45 +108,60 @@ forms:
       - Eesercizio
 
 responses:
-  
+
   utter_ric:
   - text: "Allora {Enome}, quale tra le seguenti azioni preferisci approfondire?\n
-   1) Definire il tuo piano alimentare;\n 2) Scoprire un potenziale piano di allenamento\n 3) Approfondire gli esercizi che ti posso offrire"
+   1) Definire il tuo piano alimentare;\n 2) Approfondire un piano di allenamento\n 3) Scoprire gli esercizi che ti posso offrire"
+  - text: "Dimmi {Enome} cosa preferiresti trattare tra: \n
+  1) Definire il tuo piano alimentare;\n 2) Approfondire un piano di allenamento\n 3) Scoprire gli esercizi che ti posso offrire"
 
   utter_ric_bmi:
-  - text: "Bene, per capire che tipo di alimentazione seguire è necessario che io calcoli il tuo indice di massa corporea, ovvero il bmi, vuoi avere delle informazioni a riguardo  oppure vuoi che proceda con il calcolo del bmi?"
+  - text: "Bene, per capire che tipo di alimentazione seguire è necessario che io calcoli il tuo indice di massa corporea, anche conosciuto come BMI. Vuoi ricevere delle informazioni a riguardo oppure procediamo con il calcolo?"
 
   utter_ric_calc_bmi:
   - text:  "Vogliamo procedere con il calcolo del bmi?"
 
   utter_opzioni_calco_bmi:
-  - text: "Preferisci proseguire con il calcolo, che iniziamo ad allenarci, oppure vuoi vedere l'elenco degli esercizi che abbiamo a disposizione?"
+  - text: "Preferisci proseguire con il calcolo cosi da poterti consigliare un piano di allenamento iniziale, oppure vuoi vedere l'elenco degli esercizi che abbiamo a disposizione?"
 
-  
+
   utter_spiegazione_bmi:
-  - text: "il bmi è un particolare numero, ottenuto tramite una certa formula matematica espressa in funzione della tua altezza e del tuo peso, che ci consente di capire lo stato della tua condizione fisica, ovvero, in parole povere, ci permette di capire se sei in forma o meno. Ad ogni modo se vuoi saperne di più ti rimando al seguente link https://www.centrostudigised.it/calcola_il_tuo_bmi.html"
+  - text: "Il BMI (Body Mass Index), o indice di massa corporea, è una misura utilizzata per valutare se una persona ha un peso sano rispetto alla sua altezza. 
+  Il BMI viene calcolato dividendo il peso di una persona in chilogrammi per il quadrato della sua altezza in metri. Il risultato fornisce un'indicazione della quantità di grasso corporeo di una persona. 
+  Tuttavia, è importante notare che il BMI non tiene conto di altri fattori come la composizione corporea, la massa muscolare e l'età, quindi non sempre è un indicatore accurato della salute complessiva di una persona.\n\n 
+  Ad ogni modo se vuoi saperne di più ti rimando al seguente link: https://www.centrostudigised.it/calcola_il_tuo_bmi.html"
 
   utter_submit:
-  - text: "Bene, sto procedendo con il calcolo, pochi secondi e conoscerai la dieta migliore da seguire per il tuo fisico!"
+  - text: "Bene, sto procedendo con il calcolo, pochi secondi e conoscerai un'idea di dieta da seguire per il tuo fisico!"
 
   utter_please_rephrase:
     - text: "Prova a riformulare la frase che non ti ho capito..."
+    - text: "Forse non ho ben capito cosa mi stai chiedendo :("
 
 
 
   # Utter per le form
   utter_ask_Epeso:
-  - text: Per proseguire con il calcolo del bmi è necessario che tu mi dica il tu peso attuale in chili (kg).
+  - text: Per proseguire con il calcolo del BMI è necessario che mi dica il tuo peso attuale in chilogrammi (kg).
+  - text: Mi servirebbe sapere il tuo peso in chili (kg).
 
   utter_ask_Ealtezza:
   - text: Mi servirebbe conoscere anche la tua altezza espressa in metri (m) per concludere la procedura di calcolo.
+  - text: Per ultimare il calcolo del BMI è necessario che tu mi dica la tua altezza in metri (m).
 
   utter_ask_Enome:
-  - text: Salve io sono Fit, il tuo personal train, e ti guiderò nei tuoi primi passi nel mondo della palestra, ma prima di iniziare, mi piacerebbe conoscerti meglio, come ti chiami?
+  - text: Salve io sono Fit, il tuo personal trainer, e ti guiderò nei tuoi primi passi nel mondo della palestra. Ma prima di iniziare mi piacerebbe conoscerti meglio, come ti chiami?
+  - text: Ciao! Il mio nome è Fit, e sono stato generato affinchè ti fornissi delle informazioni utili per presentarti il mondo del fitness! Innanzitutto come posso chiamarti?
 
   utter_ask_Ecasapalestra:
-  - text: Ti vuoi allenare a casa o in palestra? Nel caso in cui tu ti voglia allenare a casa, predisporremo un scheda di allenamento che non preveda l'utilizzo di macchinari o bilanceri "
+  - text: Ti vuoi allenare a casa o in palestra? Così che possa crearti una scheda di allenamento che non preveda l'utilizzo di macchinari o bilanceri.
+  - text: Vuoi che ti crei un piano di allenamento da svolgere a casa o in palestra?
+  - text: Preferisci allenarti in casa o in palestra? E' un'informazione che userei per generarti una scheda con più o meno bilanceri.
 
+  utter_generate_scheda:
+    - text: Allora provo a mettere insieme degli esercizi cosi da poterti addentrare nel mondo del fitness.
+    - text: Cercherò di creare una scheda su misura per te!
+    - text: Provo a generare una scheda full-body che potrebbe andar bene per le tue prime settimane di fitness!
 
 actions:
 - utter_ric
@@ -157,6 +171,7 @@ actions:
 - utter_opzioni_calco_bmi
 - utter_submit
 - utter_spiegazione_bmi
+- utter_generate_scheda
 - action_calc_bmi
 - action_create_scheda
 - action_ask_Etargetcorpo

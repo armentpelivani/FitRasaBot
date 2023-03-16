@@ -1,7 +1,6 @@
 version: "3.1"
 
 stories:
-
 - story: calcolo bmi
   steps:
   - intent: saluto
@@ -10,9 +9,9 @@ stories:
   - slot_was_set:
     - requested_slot: Enome
   - slot_was_set:
-    - Enome: minni
+    - Enome: Alessandro
   - slot_was_set:
-    - Enome: Giacomo
+    - Enome: chiara
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
@@ -41,7 +40,6 @@ stories:
   - action: action_calc_bmi
 
 # Storia per la richiesta delle informazioni sul bmi
-
 - story: informazini bmi e calcolo
   steps:
   - intent: saluto
@@ -52,7 +50,7 @@ stories:
   - slot_was_set:
     - Enome: minni
   - slot_was_set:
-    - Enome: Giacomo
+    - Enome: Claudio
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
@@ -91,9 +89,9 @@ stories:
   - slot_was_set:
     - requested_slot: Enome
   - slot_was_set:
-    - Enome: minni
+    - Enome: Domenico
   - slot_was_set:
-    - Epeso: Giacomo
+    - Enome: giulia
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
@@ -127,19 +125,8 @@ stories:
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
-  
-  # Pulsante 
-  # - intent: richiesta_elenco_esercizi
-  # - action: esercizi_form 
-  # - active_loop: esercizi_form
-  # - slot_was_set:
-  #   - requested_slot: Eesercizi
-  # - slot_was_set:
-  #   - Eesercizi: true
-  # - slot_was_set:
-  #   - requested_slot: null
-  # - active_loop: null
-  # - action: utter_submit
+  - action: action_create_scheda
+
 
 - story: l'utente vuole delle info sugli esercizi a disposizione
   steps:
@@ -149,9 +136,9 @@ stories:
   - slot_was_set:
     - requested_slot: Enome
   - slot_was_set:
-    - Enome: minni
+    - Enome: martina
   - slot_was_set:
-    - Epeso: Giacomo
+    - Enome: Giacomo
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
