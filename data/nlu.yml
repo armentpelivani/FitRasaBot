@@ -179,20 +179,23 @@ nlu:
 - intent: richiesta_elenco_esercizi
   examples: |
     - vorrei vedere elenco degli esercizi
+    - informazioni sugli esercizi
+    - mi piacerebbe approfondire gli esercizi
+    - vorrei maggiori informazioni sugli esercizi
     - elenco esercizi 
-    - lista 
+    - lista esercizi
     - elenco degli esercizi 
     - voglio vedere gli esercizi per categoria 
 
 - intent: scelta_categoria_allenamento
   examples: |
-    - [gambe](Ecorpoallenamento)
-    - [schiena](Ecorpoallenamento)
-    - [braccia](Ecorpoallenamento)
-    - [busto](Ecorpoallenamento)
-    - vorrei vedere la categorie delle [gambe](Ecorpoallenamento)
-    - categoria [braccia](Ecorpoallenamento)
-    - voglio vedere la [schiena](Ecorpoallenamento)
+    - [gambe](Etargetcorpo)
+    - [schiena](Etargetcorpo)
+    - [braccia](Etargetcorpo)
+    - [busto](Etargetcorpo)
+    - vorrei vedere la categorie delle [gambe](Etargetcorpo)
+    - categoria [braccia](Etargetcorpo)
+    - voglio vedere la [schiena](Etargetcorpo)
 
 - intent: richiesta_info_esercizio
   examples: |

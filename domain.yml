@@ -26,7 +26,7 @@ entities:
   - Enome
   - Ecasapalestra
   - Escheda
-  - Ecorpoallenamento
+  - Etargetcorpo
   - Eesercizio
 
 
@@ -66,12 +66,12 @@ slots:
     - type: from_entity
       entity: Escheda
   
-  Ecorpoallenamento:
+  Etargetcorpo:
     type: text
     influence_conversation: true
     mappings:
     - type: from_entity
-      entity: Ecorpoallenamento 
+      entity: Etargetcorpo
   
   Eesercizio:
     type: text
@@ -100,9 +100,9 @@ forms:
     required_slots:
       - Escheda
 
-  corpoallenamento_form:
+  targetcorpo_form:
     required_slots:
-      - Ecorpoallenamento
+      - Etargetcorpo
 
   info_esercizio_form:
     required_slots:
@@ -111,7 +111,8 @@ forms:
 responses:
   
   utter_ric:
-  - text: "Allora {Enome}, preferisci che iniziamo con il definire il tuo piano alimentare, un piano di allenamento oppure gradisci vedere tutti gli esercizi che ti posso offrire?"
+  - text: "Allora {Enome}, quale tra le seguenti azioni preferisci approfondire?\n
+   1) Definire il tuo piano alimentare;\n 2) Scoprire un potenziale piano di allenamento\n 3) Approfondire gli esercizi che ti posso offrire"
 
   utter_ric_bmi:
   - text: "Bene, per capire che tipo di alimentazione seguire è necessario che io calcoli il tuo indice di massa corporea, ovvero il bmi, vuoi avere delle informazioni a riguardo  oppure vuoi che proceda con il calcolo del bmi?"
@@ -147,9 +148,6 @@ responses:
   utter_ask_Ecasapalestra:
   - text: Ti vuoi allenare a casa o in palestra? Nel caso in cui tu ti voglia allenare a casa, predisporremo un scheda di allenamento che non preveda l'utilizzo di macchinari o bilanceri "
 
-  utter_ask_Ecorpoallenamento:
-  - text: gli esercizi sono categorizati in base alla parte del corpo, quale categoria vuoi conoscere? gambe, braccia, schiena oppure busto?
-  
 
 actions:
 - utter_ric
@@ -161,12 +159,13 @@ actions:
 - utter_spiegazione_bmi
 - action_calc_bmi
 - action_create_scheda
+- action_ask_Etargetcorpo
 - action_ask_Eesercizio
 - action_get_info_es
 - validate_bmi_form
 - validate_nome_form
 - validate_casapalestra_form
-- validate_corpoallenamento_form
+- validate_targetcorpo_form
 
 
 

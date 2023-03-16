@@ -33,7 +33,8 @@ warnings.filterwarnings("ignore")
 df = pd.read_csv('./esercizi.csv', encoding='utf-8', sep=';')
 remain = df
 exs = None
-print(df.head(), df.shape)
+#print(df.head(), df.shape)
+
 
 
 def isfloat(num):
@@ -112,7 +113,6 @@ class ValidateCasaPalestraForm(FormValidationAction):
 
 
 class ActionBmi(Action):
-    #
     def name(self) -> Text:
         return "action_calc_bmi"
 
@@ -150,7 +150,6 @@ class ActionBmi(Action):
 
 
 class ActionCreateScheda(Action):
-    #
     def name(self) -> Text:
         return "action_create_scheda"
 
@@ -189,6 +188,46 @@ class ActionCreateScheda(Action):
 
         return {}
 
+class AskForTargetCorpo(Action):
+    def name(self) -> Text:
+        return "action_ask_Etargetcorpo"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> Any:
+
+        cats = df['target'].unique()
+        target = '\n'.join('- ' + t for t in cats)
+        dispatcher.utter_message(text="Gli esercizi sono stati categorizzati in base alla parte del corpo. "
+                                      "Le categorie attualmente gestite sono: \n" + target +
+                                      "\nQuale categoria vuoi approfondire?")
+
+        return {}
+
+class AskForEesercizio(Action):
+    def name(self) -> Text:
+        return "action_ask_Eesercizio"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> Any:
+
+        global remain, exs
+        # genero in maniera randomica e unica gli esercizi del blocco scelto
+        # poi aggiorno gli esercizi che ancora non sono stati mostrati
+        exs = remain[remain["target"] == tracker.get_slot("Etargetcorpo")]
+        rand_samp = 5 if exs.shape[0] > 4 else exs.shape[0]
+        exs = exs.sample(rand_samp).drop_duplicates()
+        remain = pd.merge(remain, exs, indicator=True, how='outer').query('_merge=="left_only"') \
+            .drop('_merge', axis=1)
+
+        # generazione bottoni
+        dispatcher.utter_message(text="Clicca su uno degli esercizi per avere più informazioni.",
+                                 buttons=[{"title": str(es['es_name']),
+                                           "payload":'/richiesta_info_esercizio{"Eesercizio":"'+str(es['es_name'])+'"}'}
+                                          for idx, es in exs.iterrows()])
+
+        return [SlotSet("Etargetcorpo", None)]
 
 class AskForEeserciziAction(Action):
     def name(self) -> Text:
@@ -201,7 +240,7 @@ class AskForEeserciziAction(Action):
         global remain, exs
         # genero in maniera randomica e unica gli esercizi del blocco scelto
         # poi aggiorno gli esercizi che ancora non sono stati mostrati
-        exs = remain[remain["target"] == tracker.get_slot("Ecorpoallenamento")]
+        exs = remain[remain["target"] == tracker.get_slot("Etargetcorpo")]
         rand_samp = 5 if exs.shape[0] > 4 else exs.shape[0]
         exs = exs.sample(rand_samp).drop_duplicates()
         remain = pd.merge(remain, exs, indicator=True, how='outer').query('_merge=="left_only"') \
@@ -213,7 +252,7 @@ class AskForEeserciziAction(Action):
                                            "payload":'/richiesta_info_esercizio{"Eesercizio":"'+str(es['es_name'])+'"}'}
                                           for idx, es in exs.iterrows()])
 
-        return [SlotSet("Ecorpoallenamento", None)]
+        return [SlotSet("Etargetcorpo", None)]
 
 
 class GetInfoEs(Action):
@@ -241,11 +280,11 @@ class GetInfoEs(Action):
 
 
 
-class ValidateCorpoAllenamentoForm(FormValidationAction):
+class ValidateTargetCorpoForm(FormValidationAction):
     def name(self) -> Text:
-        return "validate_corpoallenamento_form"
+        return "validate_targetcorpo_form"
 
-    def validate_Ecorpoallenamento(
+    def validate_Etargetcorpo(
             self,
             slot_value: Any,
             dispatcher: CollectingDispatcher,
@@ -256,7 +295,7 @@ class ValidateCorpoAllenamentoForm(FormValidationAction):
         if slot_value.capitalize() not in df['target'].unique():
             dispatcher.utter_message(
                 text=f"Non riconosco questa parte del corpo. I target gestiti sono: {'/'.join(df['target'].unique())}.")
-            return {"Ecorpoallenamento": None}
+            return {"Etargetcorpo": None}
 
         # check se sono già stati mostrati tutti gli esercizi disponibili
         if remain[remain["target"] == slot_value.capitalize()].shape[0] == 0:
@@ -266,15 +305,4 @@ class ValidateCorpoAllenamentoForm(FormValidationAction):
         else:
             dispatcher.utter_message(
                 text=f"OK! Di seguito troverai alcuni esercizi del blocco '{slot_value.capitalize()}'")
-        return {"Ecorpoallenamento": slot_value.capitalize(), "Eesercizio": None}
-    
-# validazione dell' esercizio selezionato
-    def validate_Eesercizio(
-            self,
-            slot_value: Any,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: DomainDict,
-    ) -> Any:
-
-        return {}
+        return {"Etargetcorpo": slot_value.capitalize(), "Eesercizio": None}

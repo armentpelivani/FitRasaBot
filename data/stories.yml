@@ -157,26 +157,26 @@ stories:
   - active_loop: null
   - action: utter_ric
   - intent: richiesta_elenco_esercizi
-  - action: corpoallenamento_form
-  - active_loop: corpoallenamento_form
+  - action: targetcorpo_form
+  - active_loop: targetcorpo_form
   - slot_was_set:
-    - requested_slot: Ecorpoallenamento
+    - requested_slot: Etargetcorpo
   - slot_was_set:
-    - Ecorpoallenamento: sciena
+    - Etargetcorpo: sciena
   - slot_was_set:
-    - Ecorpoallenamento: bracia
+    - Etargetcorpo: bracia
   - slot_was_set:
-    - Ecorpoallenamento: gabe
+    - Etargetcorpo: gabe
   - slot_was_set:
-    - Ecorpoallenamento: game
+    - Etargetcorpo: game
   - slot_was_set:
-    - Ecorpoallenamento: busto
+    - Etargetcorpo: busto
   - slot_was_set:
-    - Ecorpoallenamento: bustto
+    - Etargetcorpo: bustto
   - slot_was_set:
-    - Ecorpoallenamento: brcie
+    - Etargetcorpo: brcie
   - slot_was_set:
-    - Ecorpoallenamento: braia
+    - Etargetcorpo: braia
   - slot_was_set:
       - requested_slot: null
   - active_loop: null
