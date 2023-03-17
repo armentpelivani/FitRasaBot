@@ -31,10 +31,10 @@ import warnings
 warnings.filterwarnings("ignore")
 
 df = pd.read_csv('./esercizi.csv', encoding='utf-8', sep=';')
-remain = df
-exs = None
-#print(df.head(), df.shape)
+remain, exs, scheda = df, None, None
+fb_stretch = ['Stretching full-body', '', '', '', '']
 
+# print(df.head(), df.shape)
 
 
 def isfloat(num):
@@ -43,6 +43,61 @@ def isfloat(num):
         return True
     except ValueError:
         return False
+
+
+def set_scheda(place: str) -> pd.DataFrame:
+    global df
+    s = None
+    if place == "palestra":
+        df = df[(df['place'] == 'Palestra') | (df['place'] == 'Casa_palestra')]
+
+        s = df[df['es_name'].isin(['Tapis roulant', 'Cyclette'])].sample(1).drop_duplicates()
+        s = pd.concat([s, df[(df['target'] == 'Cardio') & (~df['es_name'].isin(['Tapis roulant', 'Cyclette']))].sample(1).drop_duplicates()],
+                      ignore_index=True, sort=False)
+        s = pd.concat([s, df[(df['target'] == 'Braccia') & (df['type'] != 'Corpolibero')].sample(2).drop_duplicates()],
+                      ignore_index=True, sort=False)
+        s = pd.concat([s, df[(df['target'] == 'Gambe')].sample(2).drop_duplicates()],
+                      ignore_index=True, sort=False)
+        s = pd.concat([s, df[(df['target'] == 'Addominali')].sample(1).drop_duplicates()],
+                      ignore_index=True, sort=False)
+        s.loc[len(s)] = fb_stretch
+
+
+        print(s.head(10))
+
+    elif place == "casa":
+        df = df[(df['place'] == 'Casa') | (df['place'] == 'Casa_palestra')]
+
+        s = df[df['target'] == 'Cardio'].sample(2).drop_duplicates()
+        s = pd.concat([s, df[(df['target'] == 'Braccia')].sample(2).drop_duplicates()],
+                      ignore_index=True, sort=False)
+        s = pd.concat([s, df[(df['target'] == 'Gambe')].sample(2).drop_duplicates()],
+                      ignore_index=True, sort=False)
+        s = pd.concat([s, df[(df['target'] == 'Addominali')].sample(2).drop_duplicates()],
+                      ignore_index=True, sort=False)
+
+        s.loc[len(s)] = fb_stretch
+
+        print(s.head())
+
+    es_name = ['Squat', 'Bench press', 'Deadlift', 'Shoulder press', 'Leg press', 'Lat pulldown', 'Barbell curl',
+               'Dumbbell fly', 'Plank', 'Russian twist']
+    target = ['Gambe', 'Petto', 'Schiena', 'Spalle', 'Gambe', 'Schiena', 'Bicipiti', 'Petto', 'Core', 'Addominali']
+    tempo_recupero = [120, 90, 150, 60, 120, 90, 60, 60, 30, 30]
+    ripetizioni = [5, 8, 5, 10, 12, 10, 12, 8, 60, 40]
+    peso = [100, 80, 120, 50, 150, 80, 30, 10, 0, 0]
+
+    # Creazione del DataFrame
+    df = pd.DataFrame(
+        {'Nome esercizi': es_name, 'Target': target, 'Ripetizioni': ripetizioni,
+         'Peso': peso, 'Tempo di recupero': tempo_recupero})
+    df = df.set_index('Nome esercizi')
+    # Visualizzazione del DataFrame
+    # print(df)
+    return df
+
+
+set_scheda('casa')
 
 
 class ValidateBmiForm(FormValidationAction):
@@ -162,25 +217,10 @@ class ActionCreateScheda(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> Any:
+        s_df = set_scheda(tracker.get_slot("Ecasapalestra"))
 
-        # TODO: Andare a generare la scheda per l'utente sulla base degli slot settati
-
-        es_name = ['Squat', 'Bench press', 'Deadlift', 'Shoulder press', 'Leg press', 'Lat pulldown', 'Barbell curl',
-                   'Dumbbell fly', 'Plank', 'Russian twist']
-        target = ['Gambe', 'Petto', 'Schiena', 'Spalle', 'Gambe', 'Schiena', 'Bicipiti', 'Petto', 'Core', 'Addominali']
-        tempo_recupero = [120, 90, 150, 60, 120, 90, 60, 60, 30, 30]
-        ripetizioni = [5, 8, 5, 10, 12, 10, 12, 8, 60, 40]
-        peso = [100, 80, 120, 50, 150, 80, 30, 10, 0, 0]
-
-        # Creazione del DataFrame
-        df = pd.DataFrame(
-            {'Nome esercizi': es_name, 'Target': target, 'Ripetizioni': ripetizioni,
-             'Peso': peso, 'Tempo di recupero': tempo_recupero})
-        df = df.set_index('Nome esercizi')
-        # Visualizzazione del DataFrame
-        #print(df)
-
-        fig = ff.create_table(df, index=True, index_title='Esercizi')
+        fig = ff.create_table(s_df, index=True, index_title='Esercizi')
+        # TODO: Da mettere come sottotitolo Principiante - 2gg a settimana
         fig.update_layout(autosize=True, title_text=f'Scheda esercizi di:            {tracker.get_slot("Enome")}',
                           margin={'t': 40},
                           width=1270,
@@ -198,6 +238,7 @@ class ActionCreateScheda(Action):
 
         return [SlotSet("Ecasapalestra", None)]
 
+
 class AskForTargetCorpo(Action):
     def name(self) -> Text:
         return "action_ask_Etargetcorpo"
@@ -205,7 +246,7 @@ class AskForTargetCorpo(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> Any:
-
+        df['target'] = df['target'].apply(lambda x: x.strip())
         cats = df['target'].unique()
         target = '\n'.join('- ' + t for t in cats)
         dispatcher.utter_message(text="Gli esercizi sono stati categorizzati in base alla parte del corpo. "
@@ -214,6 +255,7 @@ class AskForTargetCorpo(Action):
 
         return {}
 
+
 class AskForEesercizio(Action):
     def name(self) -> Text:
         return "action_ask_Eesercizio"
@@ -221,7 +263,6 @@ class AskForEesercizio(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> Any:
-
         global remain, exs
         # genero in maniera randomica e unica gli esercizi del blocco scelto
         # poi aggiorno gli esercizi che ancora non sono stati mostrati
@@ -234,10 +275,12 @@ class AskForEesercizio(Action):
         # generazione bottoni
         dispatcher.utter_message(text="Clicca su uno degli esercizi per avere più informazioni.",
                                  buttons=[{"title": str(es['es_name']),
-                                           "payload":'/richiesta_info_esercizio{"Eesercizio":"'+str(es['es_name'])+'"}'}
+                                           "payload": '/richiesta_info_esercizio{"Eesercizio":"' + str(
+                                               es['es_name']) + '"}'}
                                           for idx, es in exs.iterrows()])
 
         return [SlotSet("Etargetcorpo", None)]
+
 
 class AskForEeserciziAction(Action):
     def name(self) -> Text:
@@ -246,7 +289,6 @@ class AskForEeserciziAction(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> Any:
-
         global remain, exs
         # genero in maniera randomica e unica gli esercizi del blocco scelto
         # poi aggiorno gli esercizi che ancora non sono stati mostrati
@@ -259,7 +301,8 @@ class AskForEeserciziAction(Action):
         # generazione bottoni
         dispatcher.utter_message(text="Clicca su uno degli esercizi per avere più informazioni.",
                                  buttons=[{"title": str(es['es_name']),
-                                           "payload":'/richiesta_info_esercizio{"Eesercizio":"'+str(es['es_name'])+'"}'}
+                                           "payload": '/richiesta_info_esercizio{"Eesercizio":"' + str(
+                                               es['es_name']) + '"}'}
                                           for idx, es in exs.iterrows()])
 
         return [SlotSet("Etargetcorpo", None)]
@@ -278,7 +321,6 @@ class GetInfoEs(Action):
 
         dispatcher.utter_message(text=f"{esercizioin}: {descrizione}")
 
-
         # generazione bottoni
         dispatcher.utter_message(text="Clicca su uno degli esercizi per avere più informazioni.",
                                  buttons=[{"title": str(es['es_name']),
@@ -287,7 +329,6 @@ class GetInfoEs(Action):
                                           for idx, es in exs.iterrows()])
 
         return [SlotSet("Eesercizio", None)]
-
 
 
 class ValidateTargetCorpoForm(FormValidationAction):

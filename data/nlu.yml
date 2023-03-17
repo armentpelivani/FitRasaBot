@@ -185,6 +185,11 @@ nlu:
     - vorrei vedere la categorie delle [gambe](Etargetcorpo)
     - categoria [braccia](Etargetcorpo)
     - voglio vedere la [schiena](Etargetcorpo)
+    - [cardio](Etargetcorpo)
+    - [Schiena](Etargetcorpo)
+    - [Addominali](Etargetcorpo)
+    - [Busto](Etargetcorpo)
+    - vorrei approfondire gli [addominali](Etargetcorpo)
 
 - intent: richiesta_info_esercizio
   examples: |
