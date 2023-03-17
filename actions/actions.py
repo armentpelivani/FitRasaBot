@@ -45,16 +45,32 @@ def isfloat(num):
         return False
 
 
-def set_scheda(place: str) -> pd.DataFrame:
+def set_scheda(place: str):
     global df
     s = None
     if place == "palestra":
         df = df[(df['place'] == 'Palestra') | (df['place'] == 'Casa_palestra')]
 
         s = df[df['es_name'].isin(['Tapis roulant', 'Cyclette'])].sample(1).drop_duplicates()
-        s = pd.concat([s, df[(df['target'] == 'Cardio') & (~df['es_name'].isin(['Tapis roulant', 'Cyclette']))].sample(1).drop_duplicates()],
+        s = pd.concat([s, df[(df['target'] == 'Aerobico') & (~df['es_name'].isin(['Tapis roulant', 'Cyclette']))].sample(1).drop_duplicates()],
                       ignore_index=True, sort=False)
-        s = pd.concat([s, df[(df['target'] == 'Braccia') & (df['type'] != 'Corpolibero')].sample(2).drop_duplicates()],
+        s = pd.concat([s, df[(df['target'] == 'Braccia') & (df['type'] != 'Corpolibero')].sample(1).drop_duplicates()],
+                      ignore_index=True, sort=False)
+        s = pd.concat([s, df[(df['target'] == 'Busto')].sample(1).drop_duplicates()],
+                      ignore_index=True, sort=False)
+        s = pd.concat([s, df[(df['target'] == 'Schiena')].sample(1).drop_duplicates()],
+                      ignore_index=True, sort=False)
+        s = pd.concat([s, df[(df['target'] == 'Gambe')].sample(1).drop_duplicates()],
+                      ignore_index=True, sort=False)
+        s = pd.concat([s, df[(df['target'] == 'Addominali')].sample(1).drop_duplicates()],
+                      ignore_index=True, sort=False)
+        s.loc[len(s)] = fb_stretch
+
+    elif place == "casa":
+        df = df[(df['place'] == 'Casa') | (df['place'] == 'Casa_palestra')]
+
+        s = df[df['target'] == 'Aerobico'].sample(2).drop_duplicates()
+        s = pd.concat([s, df[(df['target'] == 'Braccia')].sample(2).drop_duplicates()],
                       ignore_index=True, sort=False)
         s = pd.concat([s, df[(df['target'] == 'Gambe')].sample(2).drop_duplicates()],
                       ignore_index=True, sort=False)
@@ -62,42 +78,19 @@ def set_scheda(place: str) -> pd.DataFrame:
                       ignore_index=True, sort=False)
         s.loc[len(s)] = fb_stretch
 
-
-        print(s.head(10))
-
-    elif place == "casa":
-        df = df[(df['place'] == 'Casa') | (df['place'] == 'Casa_palestra')]
-
-        s = df[df['target'] == 'Cardio'].sample(2).drop_duplicates()
-        s = pd.concat([s, df[(df['target'] == 'Braccia')].sample(2).drop_duplicates()],
-                      ignore_index=True, sort=False)
-        s = pd.concat([s, df[(df['target'] == 'Gambe')].sample(2).drop_duplicates()],
-                      ignore_index=True, sort=False)
-        s = pd.concat([s, df[(df['target'] == 'Addominali')].sample(2).drop_duplicates()],
-                      ignore_index=True, sort=False)
-
-        s.loc[len(s)] = fb_stretch
-
-        print(s.head())
-
-    es_name = ['Squat', 'Bench press', 'Deadlift', 'Shoulder press', 'Leg press', 'Lat pulldown', 'Barbell curl',
-               'Dumbbell fly', 'Plank', 'Russian twist']
-    target = ['Gambe', 'Petto', 'Schiena', 'Spalle', 'Gambe', 'Schiena', 'Bicipiti', 'Petto', 'Core', 'Addominali']
-    tempo_recupero = [120, 90, 150, 60, 120, 90, 60, 60, 30, 30]
-    ripetizioni = [5, 8, 5, 10, 12, 10, 12, 8, 60, 40]
-    peso = [100, 80, 120, 50, 150, 80, 30, 10, 0, 0]
-
+    tempo_recupero = [120, 90, 150, 60, 120, '-', '-', '-']
+    ripetizioni = [5, 8, 5, 10, 12,  '-', '-', '-']
+    peso = [100, 80, 120, 50, 150, '-', '-', '-']
     # Creazione del DataFrame
-    df = pd.DataFrame(
-        {'Nome esercizi': es_name, 'Target': target, 'Ripetizioni': ripetizioni,
+    app = pd.DataFrame(
+        {'Nome esercizi': s['es_name'], 'Target': s['target'], 'Ripetizioni': ripetizioni,
          'Peso': peso, 'Tempo di recupero': tempo_recupero})
-    df = df.set_index('Nome esercizi')
-    # Visualizzazione del DataFrame
-    # print(df)
-    return df
+    app = app.set_index('Nome esercizi')
+    return app, s
 
 
-set_scheda('casa')
+'''x, scheda = set_scheda('palestra')
+print(scheda.head(10))'''
 
 
 class ValidateBmiForm(FormValidationAction):

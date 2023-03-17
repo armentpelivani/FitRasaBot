@@ -7,7 +7,6 @@
     <list default="true" id="7e74bb82-9dbe-4ffc-80e8-fc1a4ee93d23" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/actions/actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/nlu.yml" beforeDir="false" afterPath="$PROJECT_DIR$/data/nlu.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/esercizi.csv" beforeDir="false" afterPath="$PROJECT_DIR$/esercizi.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +64,7 @@
       <workItem from="1678973023209" duration="7115000" />
       <workItem from="1678980698336" duration="29000" />
       <workItem from="1678985445248" duration="1002000" />
-      <workItem from="1679039383844" duration="11162000" />
+      <workItem from="1679039383844" duration="14117000" />
     </task>
     <servers />
   </component>
