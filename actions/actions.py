@@ -34,6 +34,7 @@ df = pd.read_csv('./esercizi.csv', encoding='utf-8', sep=';')
 remain, exs, scheda = df, None, None
 fb_stretch = ['Stretching full-body', '', '', '', '']
 
+
 # print(df.head(), df.shape)
 
 
@@ -52,7 +53,9 @@ def set_scheda(place: str):
         df = df[(df['place'] == 'Palestra') | (df['place'] == 'Casa_palestra')]
 
         s = df[df['es_name'].isin(['Tapis roulant', 'Cyclette'])].sample(1).drop_duplicates()
-        s = pd.concat([s, df[(df['target'] == 'Aerobico') & (~df['es_name'].isin(['Tapis roulant', 'Cyclette']))].sample(1).drop_duplicates()],
+        s = pd.concat([s,
+                       df[(df['target'] == 'Aerobico') & (~df['es_name'].isin(['Tapis roulant', 'Cyclette']))].sample(
+                           1).drop_duplicates()],
                       ignore_index=True, sort=False)
         s = pd.concat([s, df[(df['target'] == 'Braccia') & (df['type'] != 'Corpolibero')].sample(1).drop_duplicates()],
                       ignore_index=True, sort=False)
@@ -79,7 +82,7 @@ def set_scheda(place: str):
         s.loc[len(s)] = fb_stretch
 
     tempo_recupero = [120, 90, 150, 60, 120, '-', '-', '-']
-    ripetizioni = [5, 8, 5, 10, 12,  '-', '-', '-']
+    ripetizioni = [5, 8, 5, 10, 12, '-', '-', '-']
     peso = [100, 80, 120, 50, 150, '-', '-', '-']
     # Creazione del DataFrame
     app = pd.DataFrame(
@@ -157,7 +160,7 @@ class ValidateCasaPalestraForm(FormValidationAction):
     ) -> Dict[Text, Any]:
 
         if slot_value.lower() in ['casa', 'palestra']:
-            dispatcher.utter_message(text=f" Hai scelto di allenarti in {slot_value}!")
+            dispatcher.utter_message(text=f" Bene! Hai scelto di allenarti in {slot_value}.")
             dispatcher.utter_message(response="utter_generate_scheda")
 
             return {"Ecasapalestra": slot_value.lower()}
@@ -210,7 +213,9 @@ class ActionCreateScheda(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> Any:
-        s_df = set_scheda(tracker.get_slot("Ecasapalestra"))
+        global scheda
+
+        s_df, scheda = set_scheda(tracker.get_slot("Ecasapalestra"))
 
         fig = ff.create_table(s_df, index=True, index_title='Esercizi')
         # TODO: Da mettere come sottotitolo Principiante - 2gg a settimana
@@ -228,6 +233,8 @@ class ActionCreateScheda(Action):
 
         dispatcher.utter_message(
             text=f"Scheda creata! Visualizzala al seguente link: {image.url}")
+        dispatcher.utter_message(
+            text=f"Vorresti ricevere informazioni aggiuntive sugli esercizi presenti nella scheda?")
 
         return [SlotSet("Ecasapalestra", None)]
 
@@ -282,23 +289,37 @@ class AskForEeserciziAction(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> Any:
-        global remain, exs
-        # genero in maniera randomica e unica gli esercizi del blocco scelto
-        # poi aggiorno gli esercizi che ancora non sono stati mostrati
-        exs = remain[remain["target"] == tracker.get_slot("Etargetcorpo")]
-        rand_samp = 5 if exs.shape[0] > 4 else exs.shape[0]
-        exs = exs.sample(rand_samp).drop_duplicates()
-        remain = pd.merge(remain, exs, indicator=True, how='outer').query('_merge=="left_only"') \
-            .drop('_merge', axis=1)
+        global remain, exs, scheda
 
-        # generazione bottoni
-        dispatcher.utter_message(text="Clicca su uno degli esercizi per avere più informazioni.",
-                                 buttons=[{"title": str(es['es_name']),
-                                           "payload": '/richiesta_info_esercizio{"Eesercizio":"' + str(
-                                               es['es_name']) + '"}'}
-                                          for idx, es in exs.iterrows()])
+        latest_intent = tracker.latest_message.get("intent", {}).get("name", "")
+        print(latest_intent)
+        if latest_intent == 'informazioni_scheda' and scheda is not None:
+            # generazione bottoni
+            dispatcher.utter_message(
+                text="Clicca su uno dei seguenti esercizi della scheda per avere maggiori informazioni.",
+                buttons=[{"title": str(es['es_name']),
+                          "payload": '/richiesta_info_esercizio{"Eesercizio":"' + str(
+                              es['es_name']) + '"}'}
+                         for idx, es in scheda.iterrows()])
 
-        return [SlotSet("Etargetcorpo", None)]
+            return []
+        else:
+            # genero in maniera randomica e unica gli esercizi del blocco scelto
+            # poi aggiorno gli esercizi che ancora non sono stati mostrati
+            exs = remain[remain["target"] == tracker.get_slot("Etargetcorpo")]
+            rand_samp = 5 if exs.shape[0] > 4 else exs.shape[0]
+            exs = exs.sample(rand_samp).drop_duplicates()
+            remain = pd.merge(remain, exs, indicator=True, how='outer').query('_merge=="left_only"') \
+                .drop('_merge', axis=1)
+
+            # generazione bottoni
+            dispatcher.utter_message(text="Clicca su uno degli esercizi per avere più informazioni.",
+                                     buttons=[{"title": str(es['es_name']),
+                                               "payload": '/richiesta_info_esercizio{"Eesercizio":"' + str(
+                                                   es['es_name']) + '"}'}
+                                              for idx, es in exs.iterrows()])
+
+            return [SlotSet("Etargetcorpo", None)]
 
 
 class GetInfoEs(Action):
@@ -308,19 +329,25 @@ class GetInfoEs(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> Any:
-        global exs
+        global exs, scheda
+
         esercizioin = str(tracker.get_slot('Eesercizio'))
+        print(esercizioin)
         descrizione = df[df['es_name'] == esercizioin].iloc[0]['desc']
 
         dispatcher.utter_message(text=f"{esercizioin}: {descrizione}")
+
+        if scheda is not None:
+            buttons = scheda
+        else:
+            buttons = exs
 
         # generazione bottoni
         dispatcher.utter_message(text="Clicca su uno degli esercizi per avere più informazioni.",
                                  buttons=[{"title": str(es['es_name']),
                                            "payload": '/richiesta_info_esercizio{"Eesercizio":"' + str(
                                                es['es_name']) + '"}'}
-                                          for idx, es in exs.iterrows()])
-
+                                          for idx, es in buttons.iterrows()])
         return [SlotSet("Eesercizio", None)]
 
 

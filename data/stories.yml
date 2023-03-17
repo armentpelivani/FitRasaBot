@@ -57,7 +57,7 @@ stories:
   - action: utter_ric
   - intent: scelta_dieta
   - action: utter_ric_bmi
-  - intent: informazioni 
+  - intent: informazioni_bmi
   - action: utter_spiegazione_bmi
   - action: utter_opzioni_calco_bmi
   - intent: calcolo_bmi
@@ -98,7 +98,7 @@ stories:
   - action: utter_ric
   - intent: scelta_dieta
   - action: utter_ric_bmi
-  - intent: informazioni 
+  - intent: informazioni_bmi
   - action: utter_spiegazione_bmi
   - action: utter_opzioni_calco_bmi
   - intent: scelta_inizio_allenamento 
@@ -126,6 +126,75 @@ stories:
     - requested_slot: null
   - active_loop: null
   - action: action_create_scheda
+  - intent: informazioni_scheda
+  - action: action_ask_Eesercizio
+  - intent: richiesta_info_esercizio
+  - action: info_esercizio_form
+  - active_loop: info_esercizio_form
+  - slot_was_set:
+      - requested_slot: Eesercizio
+  - slot_was_set:
+      - Eesercizio: Dumbbell front raise
+  - slot_was_set:
+      - requested_slot: Eesercizio
+  - slot_was_set:
+      - Eesercizio: Reverse fly
+  - slot_was_set:
+      - requested_slot: Eesercizio
+  - slot_was_set:
+      - Eesercizio: Reverse fly
+  - slot_was_set:
+      - requested_slot: null
+  - active_loop: null
+  - action: action_get_info_es
+
+- story: l'utente non vuole avere info sugli es della scheda
+  steps:
+  - intent: saluto
+  - action: nome_form
+  - active_loop: nome_form
+  - slot_was_set:
+    - requested_slot: Enome
+  - slot_was_set:
+    - Enome: Domenico
+  - slot_was_set:
+    - Enome: giulia
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_ric
+  - intent: scelta_dieta
+  - action: utter_ric_bmi
+  - intent: informazioni_bmi
+  - action: utter_spiegazione_bmi
+  - action: utter_opzioni_calco_bmi
+  - intent: scelta_inizio_allenamento
+  - action: casapalestra_form
+  - active_loop: casapalestra_form
+  - slot_was_set:
+    - requested_slot: Ecasapalestra
+  - slot_was_set:
+    - Ecasapalestra: asa
+  - slot_was_set:
+    - Ecasapalestra: paletra
+  - slot_was_set:
+    - Ecasapalestra: cassa
+  - slot_was_set:
+    - Ecasapalestra: paletra
+  - slot_was_set:
+    - Ecasapalestra: asa
+  - slot_was_set:
+    - Ecasapalestra: paletra
+  - slot_was_set:
+    - Ecasapalestra: palestr
+  - slot_was_set:
+    - Ecasapalestra: aletra
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_create_scheda
+  - intent: negazione
+  - action: utter_submit
 
 
 - story: l'utente vuole delle info sugli esercizi a disposizione

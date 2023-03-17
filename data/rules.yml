@@ -63,13 +63,6 @@ rules:
   - action: action_create_scheda
 
 
-# regola richiesta scheda di allenamento
-- rule: Richiesta scheda di allenamento
-  steps:
-  - intent: scheda_allenamento
-  - action: action_create_scheda
-
-
 # regola attivazione form per la parte del corpo
 - rule: Attivazione targetcorpo form
   steps:

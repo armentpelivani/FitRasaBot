@@ -3,14 +3,14 @@ version: "3.1"
 intents:
   - saluto
   - nlu_fallback
-  - affermazione
   - negazione
   - calcolo_bmi
   - parametriBmi
   - request_bmi_form
   - scelta_dieta
   - not_opzioni
-  - informazioni
+  - informazioni_bmi
+  - informazioni_scheda
   - nome
   - scelta_inizio_allenamento
   - scelta_casa_palestra

@@ -7,28 +7,25 @@ nlu:
     - salve
     - buongiorno 
     - buonasera
+    - Ciao fit
+    - ciao fit
+    - ehi fit
+    - Ehi
+    - Ciao chi sei?
+    - chi sei
 
-- intent: affermazione
-  examples: |
-    - si 
-    - va bene 
-    - certamente 
-    - certo
-    - assolutamente 
-    - ok 
-    - certo che si 
-    - ovvio
 
 - intent: negazione 
   examples: |
     - no 
     - non mi interessa 
     - assolutamente no 
-    - nnn ci penso prorpio 
-    - neanche morto 
+    - non ci penso prorpio 
+    - no grazie mille
+    - no grazie
 
 
-- intent: calcolo_bmi # gli dico che coosco il bmi
+- intent: calcolo_bmi
   examples: |
     - caloliamo il bmi
     - procediamo con il calcolo del bmi
@@ -45,16 +42,26 @@ nlu:
     - procediamo con il calcolo 
 
 
-- intent: informazioni 
+- intent: informazioni_bmi
   examples: |
-    - vorrei saperne di più
+    - vorrei saperne di più sul bmi
     - dimmi di cosa si tratta 
-    - vorrei avere delle informazioni a riguardo 
-    - vorrei avere delle informazioni 
-    - info 
-    - informazioni
+    - vorrei approfondire il bmi
+    - info bmi
     - spiegami di cosa si tratta 
-    - voglio sapere delle info   
+    - voglio sapere delle info
+
+- intent: informazioni_scheda
+  examples: |
+    - si fammi vedere
+    - si approfondisci
+    - mostrami delle info in più
+    - dimmi qualcosa in più riguardo gli esercizi della scheda
+    - non so nulla di questi esercizi... approfondisci!
+    - si vorrei approfondire
+    - come si fanno questi esercizi
+    - dammi più info sugli esercizi
+    - dammi più info sulla scheda creata
 
 - intent: scheda_allenamento
   examples: |
@@ -67,7 +74,6 @@ nlu:
     - preferirei iniziare ad allenarmi con una scheda
     - perfavore producimi la scheda di allenamento iniziale
   
-
 
 - intent: scelta_inizio_allenamento 
   examples: |
@@ -116,7 +122,7 @@ nlu:
     - mi chiamo [Luigi](Enome)
     - il mio nome è [Chiara](Enome)
     - sono [luigi](Enome)
-    - chiamami pure [Sara](Enome)
+    - chiamami pure [Martina](Enome)
     - puoi chiamarmi [stefano](Enome)
     - [Giulia](Enome)
     - [sara](Enome)
