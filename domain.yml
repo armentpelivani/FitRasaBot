@@ -8,7 +8,7 @@ intents:
   - parametriBmi
   - request_bmi_form
   - scelta_dieta
-  - not_opzioni
+  - chiedi_servizi
   - informazioni_bmi
   - informazioni_scheda
   - nome
@@ -111,9 +111,12 @@ responses:
 
   utter_ric:
   - text: "Allora {Enome}, quale tra le seguenti azioni preferisci approfondire?\n
-   1) Definire il tuo piano alimentare;\n 2) Approfondire un piano di allenamento\n 3) Scoprire gli esercizi che ti posso offrire"
+   - Consigli su un piano alimentare giusto per te;\n - Definire un piano di allenamento\n - Scoprire gli esercizi che ti posso offrire"
   - text: "Dimmi {Enome} cosa preferiresti trattare tra: \n
-  1) Definire il tuo piano alimentare;\n 2) Approfondire un piano di allenamento\n 3) Scoprire gli esercizi che ti posso offrire"
+  - Spunti per un piano alimentare sano;\n - Definizione di un piano di allenamento\n - Approfondire gli esercizi a disposizione"
+
+  utter_servizi:
+    - text: "Ho la possibilità di: \n - Consigliarti un piano alimentare giusto per te;\n - Definirti un piano di allenamento\n - Scoprire gli esercizi che ti posso offrire"
 
   utter_ric_bmi:
   - text: "Bene, per capire che tipo di alimentazione seguire è necessario che io calcoli il tuo indice di massa corporea, anche conosciuto come BMI. Vuoi ricevere delle informazioni a riguardo oppure procediamo con il calcolo?"
@@ -158,11 +161,6 @@ responses:
   - text: Vuoi che ti crei un piano di allenamento da svolgere a casa o in palestra?
   - text: Preferisci allenarti in casa o in palestra? E' un'informazione che userei per generarti una scheda con più o meno bilanceri.
 
-  utter_generate_scheda:
-    - text: Allora provo a mettere insieme degli esercizi cosi da poterti addentrare nel mondo del fitness.
-    - text: Cercherò di creare una scheda su misura per te!
-    - text: Provo a generare una scheda full-body che potrebbe andar bene per le tue prime settimane di fitness!
-
 actions:
 - utter_ric
 - utter_please_rephrase
@@ -171,7 +169,8 @@ actions:
 - utter_opzioni_calco_bmi
 - utter_submit
 - utter_spiegazione_bmi
-- utter_generate_scheda
+- utter_servizi
+- action_get_servizi
 - action_calc_bmi
 - action_create_scheda
 - action_ask_Etargetcorpo

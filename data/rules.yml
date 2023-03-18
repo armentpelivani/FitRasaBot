@@ -2,7 +2,10 @@ version: "3.1"
 
 rules:
 
-# TODO: Serve una rule di ringraziamento cosi da poter riniziare la conversazione
+- rule: Ripropone i servizi del bot
+  steps:
+  - intent: chiedi_servizi
+  - action: action_get_servizi
 
 - rule: Ask the user to rephrase whenever they send a message with low NLU confidence
   steps:

@@ -27,16 +27,13 @@ import requests
 import csv
 from os import path
 import warnings
+from datetime import date
 
 warnings.filterwarnings("ignore")
 
 df = pd.read_csv('./esercizi.csv', encoding='utf-8', sep=';')
 remain, exs, scheda = df, None, None
-fb_stretch = ['Stretching full-body', '', '', '', '']
-
-
-# print(df.head(), df.shape)
-
+fb_stretch = ['Stretching', '', 'Full body', '', '']
 
 def isfloat(num):
     try:
@@ -89,11 +86,9 @@ def set_scheda(place: str):
         {'Nome esercizi': s['es_name'], 'Target': s['target'], 'Ripetizioni': ripetizioni,
          'Peso': peso, 'Tempo di recupero': tempo_recupero})
     app = app.set_index('Nome esercizi')
+    s.drop(s.tail(1).index, inplace=True)
     return app, s
 
-
-'''x, scheda = set_scheda('palestra')
-print(scheda.head(10))'''
 
 
 class ValidateBmiForm(FormValidationAction):
@@ -160,8 +155,10 @@ class ValidateCasaPalestraForm(FormValidationAction):
     ) -> Dict[Text, Any]:
 
         if slot_value.lower() in ['casa', 'palestra']:
-            dispatcher.utter_message(text=f" Bene! Hai scelto di allenarti in {slot_value}.")
-            dispatcher.utter_message(response="utter_generate_scheda")
+            dispatcher.utter_message(text=f" Bene! Hai scelto di allenarti in {slot_value}. "
+                                          f"Provo a generare una scheda full-body che possa andar bene per le tue prime "
+                                          f"settimane di fitness! Attendi un secondo...")
+            # dispatcher.utter_message(response="utter_generate_scheda")
 
             return {"Ecasapalestra": slot_value.lower()}
         else:
@@ -203,7 +200,31 @@ class ActionBmi(Action):
             dispatcher.utter_message(
                 text=f"https://www.my-personaltrainer.it/alimentazione/esempio-dieta-per-aumentare-massa-muscolare.html")
 
+        dispatcher.utter_message(
+            text=f"Dimmi pure come potrei continuare ad aiutarti! :)")
+
         return [SlotSet("Epeso", None), SlotSet("Ealtezza", None)]
+
+
+class ActionGetServizi(Action):
+    def name(self) -> Text:
+        return "action_get_servizi"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> Any:
+        global scheda
+        scheda = None
+        if tracker.get_slot('Enome') is not None:
+            dispatcher.utter_message(text=f'Okay {tracker.get_slot("Enome")}! Allora ti ripeto subito i miei servizi.')
+        else:
+            dispatcher.utter_message(text='Ora ti mostro subito che ho da offrirti!')
+
+        dispatcher.utter_message(response="utter_servizi")
+
+        dispatcher.utter_message(text='Dimmi tu cosa preferisci! :)')
+
+        return []
 
 
 class ActionCreateScheda(Action):
@@ -217,13 +238,27 @@ class ActionCreateScheda(Action):
 
         s_df, scheda = set_scheda(tracker.get_slot("Ecasapalestra"))
 
-        fig = ff.create_table(s_df, index=True, index_title='Esercizi')
-        # TODO: Da mettere come sottotitolo Principiante - 2gg a settimana
-        fig.update_layout(autosize=True, title_text=f'Scheda esercizi di:            {tracker.get_slot("Enome")}',
-                          margin={'t': 40},
+        fig = ff.create_table(s_df, index=True, index_title='ESERCIZI',
+                              colorscale=[[0, '#000000'], [.5, '#80beff'], [1, '#cce5ff']],
+                              font_colors=['#ffffff', '#000000', '#000000']
+                              )
+
+        fig.update_layout(autosize=True,
+                          title_text=f'<b>Scheda esercizi di:</b>     {tracker.get_slot("Enome")}'
+                                     f'                                                                           '
+                                     f'<span style="font-size: 20px;"><i>Creata il: </i> {date.today().strftime("%d/%m/%Y")}</span><br>'
+                                     f'<sup><i>(Principiante - 2gg a settimana)</i></sup>',
+                          paper_bgcolor='#cce5ff',
+                          font=dict(
+                              family="Monaco",
+                              size=18,
+                              color="Black"
+                          ),
+                          margin={'t': 65},
                           width=1270,
                           height=720,
                           )
+
         fig.write_image("scheda.png", scale=2)
 
         client = imgbbpy.SyncClient('b8e02f4fc7878ae94060c35ba45fa540')
@@ -329,7 +364,7 @@ class GetInfoEs(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> Any:
-        global exs, scheda
+        global exs, scheda, df
 
         esercizioin = str(tracker.get_slot('Eesercizio'))
         print(esercizioin)

@@ -80,6 +80,7 @@ stories:
   - active_loop: null
   - action: utter_submit
   - action: action_calc_bmi
+  - action: action_get_servizi
 
 - story: l'utente non è interessato al calcolo del bmi 
   steps:
@@ -194,7 +195,7 @@ stories:
   - active_loop: null
   - action: action_create_scheda
   - intent: negazione
-  - action: utter_submit
+  - action: action_get_servizi
 
 
 - story: l'utente vuole delle info sugli esercizi a disposizione
