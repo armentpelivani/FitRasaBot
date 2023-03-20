@@ -47,11 +47,12 @@ rules:
     - requested_slot: null
   - action: utter_submit
   - action: action_calc_bmi
+  - action: action_get_servizi
 
   # regole attivazione e registro casapalestra form
 - rule: Attivazione casapalestra form
   steps:
-    - intent: scelta_inizio_allenamento 
+    - intent: scheda_allenamento
     - action: casapalestra_form
     - active_loop: casapalestra_form
 

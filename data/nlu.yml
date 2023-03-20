@@ -45,6 +45,8 @@ nlu:
 - intent: informazioni_bmi
   examples: |
     - vorrei saperne di più sul bmi
+    - vorrei delle informazioni in più sul bmi
+    - info in più sul bmi
     - dimmi di cosa si tratta 
     - vorrei approfondire il bmi
     - info bmi
@@ -76,10 +78,6 @@ nlu:
     - crea scheda
     - preferirei iniziare ad allenarmi con una scheda
     - perfavore producimi la scheda di allenamento iniziale
-  
-
-- intent: scelta_inizio_allenamento 
-  examples: |
     - preferirei iniziare ad allenarmi 
     - generami un piano allenamento
     - iniziamo ad allenarci 
@@ -89,7 +87,7 @@ nlu:
     - fammi vedere un piano allenamento 
     - preferirei iniziare a definire il piano di allenamento 
     - iniziamo con il piano di allenamento 
-    
+  
 
 - intent: scelta_dieta
   examples: |
@@ -147,9 +145,8 @@ nlu:
     - mi chiamo [Francesco](Enome)
     - mi chiamo [Guido](Enome)
     - mi chiamo [Arment](Enome)
+    - sono [Martina](Enome)
     
-
-
 
 - intent: parametriBmi
   examples: |
@@ -200,7 +197,7 @@ nlu:
     - vorrei vedere la categorie delle [gambe](Etargetcorpo)
     - categoria [braccia](Etargetcorpo)
     - voglio vedere la [schiena](Etargetcorpo)
-    - [cardio](Etargetcorpo)
+    - [aerobico](Etargetcorpo)
     - [Schiena](Etargetcorpo)
     - [Addominali](Etargetcorpo)
     - [Busto](Etargetcorpo)

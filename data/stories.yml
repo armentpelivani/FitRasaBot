@@ -38,6 +38,7 @@ stories:
   - active_loop: null
   - action: utter_submit
   - action: action_calc_bmi
+  - action: action_get_servizi
 
 # Storia per la richiesta delle informazioni sul bmi
 - story: informazini bmi e calcolo
@@ -102,7 +103,7 @@ stories:
   - intent: informazioni_bmi
   - action: utter_spiegazione_bmi
   - action: utter_opzioni_calco_bmi
-  - intent: scelta_inizio_allenamento 
+  - intent: scheda_allenamento
   - action: casapalestra_form
   - active_loop: casapalestra_form
   - slot_was_set:
@@ -169,7 +170,7 @@ stories:
   - intent: informazioni_bmi
   - action: utter_spiegazione_bmi
   - action: utter_opzioni_calco_bmi
-  - intent: scelta_inizio_allenamento
+  - intent: scheda_allenamento
   - action: casapalestra_form
   - active_loop: casapalestra_form
   - slot_was_set:

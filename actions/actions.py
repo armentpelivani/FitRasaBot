@@ -47,34 +47,34 @@ def set_scheda(place: str):
     global df
     s = None
     if place == "palestra":
-        df = df[(df['place'] == 'Palestra') | (df['place'] == 'Casa_palestra')]
+        x = df[(df['place'] == 'Palestra') | (df['place'] == 'Casa_palestra')]
 
-        s = df[df['es_name'].isin(['Tapis roulant', 'Cyclette'])].sample(1).drop_duplicates()
+        s = x[x['es_name'].isin(['Tapis roulant', 'Cyclette'])].sample(1).drop_duplicates()
         s = pd.concat([s,
-                       df[(df['target'] == 'Aerobico') & (~df['es_name'].isin(['Tapis roulant', 'Cyclette']))].sample(
+                       x[(x['target'] == 'Aerobico') & (~x['es_name'].isin(['Tapis roulant', 'Cyclette']))].sample(
                            1).drop_duplicates()],
                       ignore_index=True, sort=False)
-        s = pd.concat([s, df[(df['target'] == 'Braccia') & (df['type'] != 'Corpolibero')].sample(1).drop_duplicates()],
+        s = pd.concat([s, x[(x['target'] == 'Braccia') & (x['type'] != 'Corpolibero')].sample(1).drop_duplicates()],
                       ignore_index=True, sort=False)
-        s = pd.concat([s, df[(df['target'] == 'Busto')].sample(1).drop_duplicates()],
+        s = pd.concat([s, x[(x['target'] == 'Busto')].sample(1).drop_duplicates()],
                       ignore_index=True, sort=False)
-        s = pd.concat([s, df[(df['target'] == 'Schiena')].sample(1).drop_duplicates()],
+        s = pd.concat([s, x[(x['target'] == 'Schiena')].sample(1).drop_duplicates()],
                       ignore_index=True, sort=False)
-        s = pd.concat([s, df[(df['target'] == 'Gambe')].sample(1).drop_duplicates()],
+        s = pd.concat([s, x[(x['target'] == 'Gambe')].sample(1).drop_duplicates()],
                       ignore_index=True, sort=False)
-        s = pd.concat([s, df[(df['target'] == 'Addominali')].sample(1).drop_duplicates()],
+        s = pd.concat([s, x[(x['target'] == 'Addominali')].sample(1).drop_duplicates()],
                       ignore_index=True, sort=False)
         s.loc[len(s)] = fb_stretch
 
     elif place == "casa":
-        df = df[(df['place'] == 'Casa') | (df['place'] == 'Casa_palestra')]
+        x = df[(df['place'] == 'Casa') | (df['place'] == 'Casa_palestra')]
 
-        s = df[df['target'] == 'Aerobico'].sample(2).drop_duplicates()
-        s = pd.concat([s, df[(df['target'] == 'Braccia')].sample(2).drop_duplicates()],
+        s = x[x['target'] == 'Aerobico'].sample(2).drop_duplicates()
+        s = pd.concat([s, x[(x['target'] == 'Braccia')].sample(2).drop_duplicates()],
                       ignore_index=True, sort=False)
-        s = pd.concat([s, df[(df['target'] == 'Gambe')].sample(2).drop_duplicates()],
+        s = pd.concat([s, x[(x['target'] == 'Gambe')].sample(2).drop_duplicates()],
                       ignore_index=True, sort=False)
-        s = pd.concat([s, df[(df['target'] == 'Addominali')].sample(1).drop_duplicates()],
+        s = pd.concat([s, x[(x['target'] == 'Addominali')].sample(1).drop_duplicates()],
                       ignore_index=True, sort=False)
         s.loc[len(s)] = fb_stretch
 
@@ -175,10 +175,10 @@ class ActionBmi(Action):
             domain: Dict[Text, Any]) -> Any:
 
         pesoIn = float(tracker.get_slot('Epeso'))
-        print(pesoIn)
+        #print(pesoIn)
 
         altezzaIn = float(tracker.get_slot('Ealtezza'))
-        print(altezzaIn)
+        #print(altezzaIn)
 
         bmi = pesoIn / (altezzaIn * altezzaIn)
 
@@ -215,14 +215,16 @@ class ActionGetServizi(Action):
             domain: Dict[Text, Any]) -> Any:
         global scheda
         scheda = None
-        if tracker.get_slot('Enome') is not None:
+        latest_intent = tracker.latest_message.get("intent", {}).get("name", "")
+        print(latest_intent)
+        if tracker.get_slot('Enome') is not None and latest_intent != 'parametriBmi':
             dispatcher.utter_message(text=f'Okay {tracker.get_slot("Enome")}! Allora ti ripeto subito i miei servizi.')
-        else:
+        elif latest_intent != 'parametriBmi':
             dispatcher.utter_message(text='Ora ti mostro subito che ho da offrirti!')
 
         dispatcher.utter_message(response="utter_servizi")
 
-        dispatcher.utter_message(text='Dimmi tu cosa preferisci! :)')
+        dispatcher.utter_message(text='Dimmi tu cosa preferisci!')
 
         return []
 
@@ -286,7 +288,7 @@ class AskForTargetCorpo(Action):
         target = '\n'.join('- ' + t for t in cats)
         dispatcher.utter_message(text="Gli esercizi sono stati categorizzati in base alla parte del corpo. "
                                       "Le categorie attualmente gestite sono: \n" + target +
-                                      "\nQuale categoria vuoi approfondire?")
+                                      "\nQuale categoria di esercizi vuoi approfondire?")
 
         return {}
 
@@ -367,7 +369,7 @@ class GetInfoEs(Action):
         global exs, scheda, df
 
         esercizioin = str(tracker.get_slot('Eesercizio'))
-        print(esercizioin)
+        #print(esercizioin)
         descrizione = df[df['es_name'] == esercizioin].iloc[0]['desc']
 
         dispatcher.utter_message(text=f"{esercizioin}: {descrizione}")

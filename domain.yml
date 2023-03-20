@@ -12,7 +12,6 @@ intents:
   - informazioni_bmi
   - informazioni_scheda
   - nome
-  - scelta_inizio_allenamento
   - scelta_casa_palestra
   - scheda_allenamento
   - richiesta_elenco_esercizi
