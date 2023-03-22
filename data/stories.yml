@@ -199,7 +199,7 @@ stories:
   - action: action_get_servizi
 
 
-- story: l'utente vuole delle info sugli esercizi a disposizione
+- story: l'utente vuole delle info sugli esercizi a disposizione 1
   steps:
   - intent: saluto
   - action: nome_form
@@ -258,6 +258,7 @@ stories:
       - requested_slot: null
   - active_loop: null
   - action: action_get_info_es
+
 
 
 

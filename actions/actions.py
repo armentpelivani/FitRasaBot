@@ -33,7 +33,8 @@ warnings.filterwarnings("ignore")
 
 df = pd.read_csv('./esercizi.csv', encoding='utf-8', sep=';')
 remain, exs, scheda = df, None, None
-fb_stretch = ['Stretching', '', 'Full body', '', '']
+fb_stretch = ['Stretching', '', 'Full body', '', '', '', '']
+
 
 def isfloat(num):
     try:
@@ -43,52 +44,52 @@ def isfloat(num):
         return False
 
 
-def set_scheda(place: str):
+def set_scheda(place: str, special=False):
     global df
     s = None
-    if place == "palestra":
-        x = df[(df['place'] == 'Palestra') | (df['place'] == 'Casa_palestra')]
+    if not special:
+        if place == "palestra":
+            x = df[(df['place'] == 'Palestra') | (df['place'] == 'Casa_palestra')]
 
-        s = x[x['es_name'].isin(['Tapis roulant', 'Cyclette'])].sample(1).drop_duplicates()
-        s = pd.concat([s,
-                       x[(x['target'] == 'Aerobico') & (~x['es_name'].isin(['Tapis roulant', 'Cyclette']))].sample(
-                           1).drop_duplicates()],
-                      ignore_index=True, sort=False)
-        s = pd.concat([s, x[(x['target'] == 'Braccia') & (x['type'] != 'Corpolibero')].sample(1).drop_duplicates()],
-                      ignore_index=True, sort=False)
-        s = pd.concat([s, x[(x['target'] == 'Busto')].sample(1).drop_duplicates()],
-                      ignore_index=True, sort=False)
-        s = pd.concat([s, x[(x['target'] == 'Schiena')].sample(1).drop_duplicates()],
-                      ignore_index=True, sort=False)
-        s = pd.concat([s, x[(x['target'] == 'Gambe')].sample(1).drop_duplicates()],
-                      ignore_index=True, sort=False)
-        s = pd.concat([s, x[(x['target'] == 'Addominali')].sample(1).drop_duplicates()],
-                      ignore_index=True, sort=False)
-        s.loc[len(s)] = fb_stretch
+            s = x[x['es_name'].isin(['Tapis roulant', 'Cyclette'])].sample(1).drop_duplicates()
+            s = pd.concat([s,
+                           x[(x['target'] == 'Aerobico') & (~x['es_name'].isin(['Tapis roulant', 'Cyclette']))].sample(
+                               1).drop_duplicates()],
+                          ignore_index=True, sort=False)
+            s = pd.concat([s, x[(x['target'] == 'Braccia') & (x['type'] != 'Corpolibero')].sample(1).drop_duplicates()],
+                          ignore_index=True, sort=False)
+            s = pd.concat([s, x[(x['target'] == 'Busto')].sample(1).drop_duplicates()],
+                          ignore_index=True, sort=False)
+            s = pd.concat([s, x[(x['target'] == 'Schiena')].sample(1).drop_duplicates()],
+                          ignore_index=True, sort=False)
+            s = pd.concat([s, x[(x['target'] == 'Gambe')].sample(1).drop_duplicates()],
+                          ignore_index=True, sort=False)
+            s = pd.concat([s, x[(x['target'] == 'Addominali')].sample(1).drop_duplicates()],
+                          ignore_index=True, sort=False)
+            s.loc[len(s)] = fb_stretch
 
-    elif place == "casa":
+        elif place == "casa":
+            x = df[(df['place'] == 'Casa') | (df['place'] == 'Casa_palestra')]
+
+            s = x[x['target'] == 'Aerobico'].sample(2).drop_duplicates()
+            s = pd.concat([s, x[(x['target'] == 'Braccia')].sample(2).drop_duplicates()],
+                          ignore_index=True, sort=False)
+            s = pd.concat([s, x[(x['target'] == 'Gambe')].sample(2).drop_duplicates()],
+                          ignore_index=True, sort=False)
+            s = pd.concat([s, x[(x['target'] == 'Addominali')].sample(1).drop_duplicates()],
+                          ignore_index=True, sort=False)
+            s.loc[len(s)] = fb_stretch
+    else:
         x = df[(df['place'] == 'Casa') | (df['place'] == 'Casa_palestra')]
-
         s = x[x['target'] == 'Aerobico'].sample(2).drop_duplicates()
-        s = pd.concat([s, x[(x['target'] == 'Braccia')].sample(2).drop_duplicates()],
-                      ignore_index=True, sort=False)
-        s = pd.concat([s, x[(x['target'] == 'Gambe')].sample(2).drop_duplicates()],
-                      ignore_index=True, sort=False)
-        s = pd.concat([s, x[(x['target'] == 'Addominali')].sample(1).drop_duplicates()],
-                      ignore_index=True, sort=False)
-        s.loc[len(s)] = fb_stretch
 
-    tempo_recupero = [120, 90, 150, 60, 120, '-', '-', '-']
-    ripetizioni = [5, 8, 5, 10, 12, '-', '-', '-']
-    peso = [100, 80, 120, 50, 150, '-', '-', '-']
     # Creazione del DataFrame
     app = pd.DataFrame(
-        {'Nome esercizi': s['es_name'], 'Target': s['target'], 'Ripetizioni': ripetizioni,
-         'Peso': peso, 'Tempo di recupero': tempo_recupero})
+        {'Nome esercizi': s['es_name'], 'Target': s['target'], 'Tempo di recupero': s['recupero'],
+         'Ripetizioni': s['ripetizioni']})
     app = app.set_index('Nome esercizi')
     s.drop(s.tail(1).index, inplace=True)
     return app, s
-
 
 
 class ValidateBmiForm(FormValidationAction):
@@ -192,8 +193,41 @@ class ActionBmi(Action):
                 text=f"Dal tuo BMI risulta che sei sovrappeso per tanto questa è la dieta consigliata per te.")
             dispatcher.utter_message(
                 text=f"https://www.my-personaltrainer.it/alimentazione/dieta-mediterranea-menu-settimanale-nutrizionista.html")
+
+            global scheda
+
+            s_df, scheda = set_scheda(tracker.get_slot("Ecasapalestra"), True)
+
+            fig = ff.create_table(s_df, index=True, index_title='ESERCIZI',
+                                  colorscale=[[0, '#000000'], [.5, '#80beff'], [1, '#cce5ff']],
+                                  font_colors=['#ffffff', '#000000', '#000000']
+                                  )
+
+            fig.update_layout(autosize=True,
+                              title_text=f'<b>Scheda esercizi di:</b>     {tracker.get_slot("Enome")}'
+                                         f'                                                                           '
+                                         f'<span style="font-size: 20px;"><i>Creata il: </i> {date.today().strftime("%d/%m/%Y")}</span><br>'
+                                         f'<sup><i>(Principiante - 2gg a settimana)</i></sup>',
+                              paper_bgcolor='#cce5ff',
+                              font=dict(
+                                  family="Monaco",
+                                  size=18,
+                                  color="Black"
+                              ),
+                              margin={'t': 65},
+                              width=1270,
+                              height=720,
+                              )
+
+            fig.write_image("scheda.png", scale=2)
+
+            client = imgbbpy.SyncClient('b8e02f4fc7878ae94060c35ba45fa540')
+            image = client.upload(file='scheda.png')
+            # print(image.url)
+            os.remove('scheda.png')
+
             dispatcher.utter_message(
-                text=f"Ti consigliamo di seguire il seguente piano di allenamento mirato a riportarti in una condizione fisica ottimale, da accompagnare alla dieta precedentemente fornita.")
+                text=f"Inoltre, ti consigliamo di seguire il seguente piano di allenamento mirato a riportarti in una condizione fisica ottimale, da accompagnare alla dieta precedentemente fornita. Visualizza la scheda al seguente link: {image.url}")
         else:
             dispatcher.utter_message(
                 text=f"Dal tuo BMI risulta che sei normopeso, nel caso in cui tu sia interessato a mettere su massa musacolare ecco la dieta per te.")
