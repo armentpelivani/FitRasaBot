@@ -33,7 +33,7 @@ warnings.filterwarnings("ignore")
 
 df = pd.read_csv('./esercizi.csv', encoding='utf-8', sep=';')
 remain, exs, scheda = df, None, None
-fb_stretch = ['Stretching', '', 'Full body', '', '', '', '']
+fb_stretch = ['Stretching', '', 'Full body', '-', '-', '-', '-']
 
 
 def isfloat(num):
@@ -80,8 +80,16 @@ def set_scheda(place: str, special=False):
                           ignore_index=True, sort=False)
             s.loc[len(s)] = fb_stretch
     else:
-        x = df[(df['place'] == 'Casa') | (df['place'] == 'Casa_palestra')]
-        s = x[x['target'] == 'Aerobico'].sample(2).drop_duplicates()
+        es1 = {"es_name": "Camminata veloce", "desc": "", "target": "Aerobico", "place": "Casa", "type": "Corpolibero",
+               "recupero": "", "ripetizioni": "20min"}
+        x = df[df['es_name'] == 'Squat']
+        s = pd.concat([pd.DataFrame.from_dict([es1]), x], ignore_index=True, sort=False)
+        s = pd.concat([s, df[(df['es_name'] == 'Push Up')]], ignore_index=True, sort=False)
+        s = pd.concat([s, df[(df['es_name'] == 'Walking Lunges')]], ignore_index=True, sort=False)
+        s = pd.concat([s, df[(df['es_name'] == 'Crunch')]], ignore_index=True, sort=False)
+        s.loc[len(s)] = fb_stretch
+
+        print(s.head(10))
 
     # Creazione del DataFrame
     app = pd.DataFrame(
@@ -91,6 +99,8 @@ def set_scheda(place: str, special=False):
     s.drop(s.tail(1).index, inplace=True)
     return app, s
 
+
+# set_scheda('casa', True)
 
 class ValidateBmiForm(FormValidationAction):
     def name(self) -> Text:
@@ -176,10 +186,10 @@ class ActionBmi(Action):
             domain: Dict[Text, Any]) -> Any:
 
         pesoIn = float(tracker.get_slot('Epeso'))
-        #print(pesoIn)
+        # print(pesoIn)
 
         altezzaIn = float(tracker.get_slot('Ealtezza'))
-        #print(altezzaIn)
+        # print(altezzaIn)
 
         bmi = pesoIn / (altezzaIn * altezzaIn)
 
@@ -403,7 +413,7 @@ class GetInfoEs(Action):
         global exs, scheda, df
 
         esercizioin = str(tracker.get_slot('Eesercizio'))
-        #print(esercizioin)
+        # print(esercizioin)
         descrizione = df[df['es_name'] == esercizioin].iloc[0]['desc']
 
         dispatcher.utter_message(text=f"{esercizioin}: {descrizione}")

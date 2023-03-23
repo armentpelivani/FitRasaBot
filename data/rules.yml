@@ -7,7 +7,7 @@ rules:
   - intent: chiedi_servizi
   - action: action_get_servizi
 
-- rule: Ask the user to rephrase whenever they send a message with low NLU confidence
+- rule: Chiedi all'utente di riformulare la frase ogni volta che invia un messaggio con bassa confidenza NLU
   steps:
   - intent: nlu_fallback
   - action: utter_please_rephrase

@@ -118,13 +118,13 @@ responses:
     - text: "Ho la possibilità di: \n - Consigliarti un piano alimentare giusto per te;\n - Definirti un piano di allenamento\n - Scoprire gli esercizi che ti posso offrire"
 
   utter_ric_bmi:
-  - text: "Bene, per capire che tipo di alimentazione seguire è necessario che io calcoli il tuo indice di massa corporea, anche conosciuto come BMI. Vuoi ricevere delle informazioni a riguardo oppure procediamo con il calcolo?"
+  - text: "Bene! Per capire che tipo di alimentazione seguire è necessario che io calcoli il tuo indice di massa corporea, anche conosciuto come BMI. Vuoi ricevere delle informazioni a riguardo oppure procediamo con il calcolo?"
 
   utter_ric_calc_bmi:
-  - text:  "Vogliamo procedere con il calcolo del bmi?"
+  - text:  "Vogliamo procedere con il calcolo del BMI?"
 
   utter_opzioni_calco_bmi:
-  - text: "Preferisci proseguire con il calcolo cosi da poterti consigliare un piano di allenamento iniziale, oppure vuoi vedere l'elenco degli esercizi che abbiamo a disposizione?"
+  - text: "Preferisci continuare con il calcolo per poterti suggerire un piano di allenamento iniziale o preferisci visualizzare direttamente l'elenco degli esercizi che abbiamo a disposizione?"
 
 
   utter_spiegazione_bmi:
@@ -134,31 +134,32 @@ responses:
   Ad ogni modo se vuoi saperne di più ti rimando al seguente link: https://www.centrostudigised.it/calcola_il_tuo_bmi.html"
 
   utter_submit:
-  - text: "Bene, sto procedendo con il calcolo, pochi secondi e conoscerai un'idea di dieta da seguire per il tuo fisico!"
+  - text: "Bene! Sto procedendo con il calcolo. Pochi secondi e conoscerai un'idea di dieta da seguire per il tuo fisico!"
 
   utter_please_rephrase:
     - text: "Prova a riformulare la frase che non ti ho capito..."
-    - text: "Forse non ho ben capito cosa mi stai chiedendo :("
+    - text: "Forse non ho ben capito cosa mi stai chiedendo... :("
 
 
 
   # Utter per le form
   utter_ask_Epeso:
-  - text: Per proseguire con il calcolo del BMI è necessario che mi dica il tuo peso attuale in chilogrammi (kg).
-  - text: Mi servirebbe sapere il tuo peso in chili (kg).
+  - text: "Per proseguire con il calcolo del BMI è necessario che mi dica il tuo peso attuale in chilogrammi (kg)."
+  - text: "Mi servirebbe sapere il tuo peso in chili (kg)."
 
   utter_ask_Ealtezza:
-  - text: Mi servirebbe conoscere anche la tua altezza espressa in metri (m) per concludere la procedura di calcolo.
-  - text: Per ultimare il calcolo del BMI è necessario che tu mi dica la tua altezza in metri (m).
+  - text: "Mi servirebbe conoscere anche la tua altezza espressa in metri (m), per concludere la procedura di calcolo."
+  - text: "Per ultimare il calcolo del BMI è necessario che tu mi dica la tua altezza in metri (m)."
 
   utter_ask_Enome:
-  - text: Salve io sono Fit, il tuo personal trainer, e ti guiderò nei tuoi primi passi nel mondo della palestra. Ma prima di iniziare mi piacerebbe conoscerti meglio, come ti chiami?
-  - text: Ciao! Il mio nome è Fit, e sono stato generato affinchè ti fornissi delle informazioni utili per presentarti il mondo del fitness! Innanzitutto come posso chiamarti?
+  - text: "Ciao! Sono Fit, il tuo personal trainer virtuale, e sarò lieto di guidarti nei tuoi primi passi nel mondo del fitness. Prima di iniziare, mi piacerebbe conoscerti meglio. Come posso chiamarti?"
+  - text: "Ciao, sono Fit, il tuo assistente virtuale per il fitness. Sono qui per fornirti informazioni e supporto per aiutarti a raggiungere i tuoi obiettivi. Ma prima di iniziare, mi piacerebbe conoscerti meglio. Come posso chiamarti?"
+  - text: "Benvenuto! Io sono Fit e sono qui per aiutarti ad avviare il tuo percorso di fitness e benessere. Come assistente virtuale per il fitness, ti fornirò le informazioni e il supporto necessari per raggiungere i tuoi obiettivi. Ma innanzitutto come posso chiamarti?"
 
   utter_ask_Ecasapalestra:
-  - text: Ti vuoi allenare a casa o in palestra? Così che possa crearti una scheda di allenamento che non preveda l'utilizzo di macchinari o bilanceri.
-  - text: Vuoi che ti crei un piano di allenamento da svolgere a casa o in palestra?
-  - text: Preferisci allenarti in casa o in palestra? E' un'informazione che userei per generarti una scheda con più o meno bilanceri.
+  - text: "Bene! Per poterti creare una scheda di allenamento personalizzata, sarebbe utile sapere dove intendi svolgere gli esercizi: a casa o in palestra?"
+  - text: "Molto bene! Vuoi che ti crei un piano di allenamento da svolgere a casa o in palestra?"
+  - text: "Preferisci allenarti a casa o in palestra? Questa informazione mi permetterà di creare una scheda di allenamento che tenga conto delle attrezzature a tua disposizione."
 
 actions:
 - utter_ric
